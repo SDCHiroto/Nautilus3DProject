@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
     [Header("Ref")]
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] PlayerInput playerInput;
-    [SerializeField] BoatControl boatControl;
+
 
     private void OnEnable() {
         Debug.Log("Enablato");
@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour
 
     private void Start() {
 //        boatControl = GameObject.Find("Ship").GetComponent<BoatControl>();
-        boatControl.enabled = false;
+
     }
 
     void OnBoat(){
@@ -58,22 +58,5 @@ public class InputManager : MonoBehaviour
         playerMovement.Jump();
     }
 
-    // ###### BOAT INPUT ######
-
-    void OnSpeedUp(){
-        boatControl.ManageLevelOfSpeed(1);
-    }
-
-    void OnSlowDown(){
-        boatControl.ManageLevelOfSpeed(-1);
-    }
-
-    void OnSteerRight(){
-        boatControl.ManageSteer(-1);
-    }
-
-    void OnSteerLeft(){
-        boatControl.ManageSteer(1);
-    }
 
 }

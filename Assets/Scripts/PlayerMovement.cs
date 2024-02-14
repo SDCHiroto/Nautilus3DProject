@@ -13,19 +13,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 4f;
     private Transform cam;
 
-    private void OnEnable() {
-        Debug.Log("Enablato");
-    }
-
-    private void OnDisable() {
-        Debug.Log("Disablato");
-    }
-
     bool isGrounded;
+
     bool isRunning = false;
 
     Vector2 movementVector;
     public Rigidbody rb;
+    Vector3 moveDirection;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -40,12 +34,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void FixedUpdate() {
         Move();
-
-        //rb.AddForce(new Vector3(0f, -150f, 0f), ForceMode.Acceleration);
-
     }
-
-    Vector3 moveDirection;
 
     void Move(){
         moveDirection = cam.forward * movementVector.y;
@@ -60,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
         }
         rb.velocity = new Vector3(movementVelocity.x, rb.velocity.y, movementVelocity.z);
+        
     }
 
 
