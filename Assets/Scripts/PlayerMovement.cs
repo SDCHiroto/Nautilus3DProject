@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        cam = Camera.main.transform;
+        cam = GameObject.Find("Camera").GetComponent<Transform>();
     }
 
     private void Update() {
@@ -43,11 +43,6 @@ public class PlayerMovement : MonoBehaviour
         moveDirection.y = 0;
         moveDirection = moveDirection * walkSpeed;
         Vector3 movementVelocity = moveDirection;
-        if(movementVector != Vector2.zero){
-            float targeAngle = Mathf.Atan2(movementVector.x, movementVector.y) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            Quaternion rotation = Quaternion.Euler(0f, targeAngle, 0f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-        }
         rb.velocity = new Vector3(movementVelocity.x, rb.velocity.y, movementVelocity.z);
         
     }

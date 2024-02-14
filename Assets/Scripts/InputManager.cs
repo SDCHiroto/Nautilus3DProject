@@ -35,16 +35,6 @@ public class InputManager : MonoBehaviour
 
     }
 
-    void OnBoat(){
-        if(playerInput.currentActionMap.name == "Player"){
-            playerInput.SwitchCurrentActionMap("Boat");
-            BoatManager.instance.EnterBoat();
-        } else {
-            playerInput.SwitchCurrentActionMap("Player");
-            BoatManager.instance.ExitBoat();
-        }
-
-    }
 
     void OnMove(InputValue value){
         playerMovement.SetMovementVector(value.Get<Vector2>());

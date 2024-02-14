@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
-                    "type": "PassThrough",
-                    "id": "861ecdcc-2b49-4d25-93ef-85cb645637ac",
-                    "expectedControlType": "Vector2",
-                    "processors": "StickDeadzone",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Sprint",
                     "type": "Button",
                     "id": "22889043-71fc-40eb-8c88-adf2424aaedd",
@@ -42,13 +33,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Boat",
-                    "type": "Button",
-                    "id": "8991822b-e231-4a16-88f8-b87e4bba88c0",
-                    "expectedControlType": "Button",
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "0feedaf9-b383-42f8-a3ba-ebe1fc98df0d",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -186,28 +177,6 @@
                 },
                 {
                     "name": "",
-                    "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8c8e490b-c610-4785-884f-f04217b23ca4",
-                    "path": "<Pointer>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse;Touch",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "0d86f224-18c5-42a6-b08b-9687eb3866a2",
                     "path": "<Keyboard>/shift",
                     "interactions": "Press(behavior=2)",
@@ -241,23 +210,23 @@
                 },
                 {
                     "name": "",
-                    "id": "5838aad0-4c4e-4e2d-bffa-dd607cb67608",
-                    "path": "<Keyboard>/f",
+                    "id": "bff07bc3-8366-4ab5-8c9b-18bb709b723f",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Boat",
+                    "processors": "ScaleVector2(x=50,y=50)",
+                    "groups": "Gamepad",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "1d7c7ddb-53d6-4d70-8f0b-b64dfc7e9ad2",
-                    "path": "<Gamepad>/buttonNorth",
+                    "id": "64c4d556-7899-49a3-a085-1b73854a4a5f",
+                    "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Boat",
+                    "groups": "Keyboard&Mouse;Touch",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
