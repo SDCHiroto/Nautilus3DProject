@@ -7,7 +7,8 @@ public class InputManager : MonoBehaviour
 
     [Header("Ref")]
     [SerializeField] PlayerMovement playerMovement;
-    [SerializeField] PlayerInput playerInput;
+    [SerializeField] PlayerInteractions playerInteractions;
+    private  PlayerInput playerInput;
 
 
     private void OnEnable() {
@@ -25,6 +26,7 @@ public class InputManager : MonoBehaviour
             instance = this;
 
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerInteractions = GameObject.Find("Player").GetComponent<PlayerInteractions>();
         playerInput = GetComponent<PlayerInput>();
 
         Cursor.visible = false;
@@ -48,5 +50,7 @@ public class InputManager : MonoBehaviour
         playerMovement.Jump();
     }
 
-
+    void OnInteract(){
+        playerInteractions.Interact();
+    }
 }

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 4f;
     private Transform cam;
 
-    bool isGrounded;
+    bool isGrounded = true;
 
     bool isRunning = false;
 
