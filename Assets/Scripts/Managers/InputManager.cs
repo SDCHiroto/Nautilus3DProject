@@ -11,14 +11,6 @@ public class InputManager : MonoBehaviour
     private  PlayerInput playerInput;
 
 
-    private void OnEnable() {
-        Debug.Log("Enablato");
-    }
-
-    private void OnDisable() {
-        Debug.Log("Disablato");
-    }
-
     void Awake(){
         if(instance != null && instance != this)
             Destroy(this);
@@ -29,15 +21,13 @@ public class InputManager : MonoBehaviour
         playerInteractions = GameObject.Find("Player").GetComponent<PlayerInteractions>();
         playerInput = GetComponent<PlayerInput>();
 
-        Cursor.visible = false;
     }
 
     private void Start() {
-//        boatControl = GameObject.Find("Ship").GetComponent<BoatControl>();
-
+        playerInput.SwitchCurrentActionMap("Player");
     }
 
-
+    #region ActionMap Player
     void OnMove(InputValue value){
         playerMovement.SetMovementVector(value.Get<Vector2>());
     }
@@ -53,4 +43,14 @@ public class InputManager : MonoBehaviour
     void OnInteract(){
         playerInteractions.Interact();
     }
+
+    #endregion
+
+    #region ActionMap Draw
+    void OnClick(){
+        DrawManager.instance.isClicked = !DrawManager.instance.isClicked;
+    }
+
+    #endregion
+
 }

@@ -13,9 +13,9 @@ public class PlayerLook : MonoBehaviour
     float yRotation;
 
     private void Start() {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        cam = Camera.main.transform;
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
+        // cam = Camera.main.transform;
     }
 
 
