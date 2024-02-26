@@ -44,11 +44,30 @@ public class InputManager : MonoBehaviour
         playerInteractions.Interact();
     }
 
+    void OnStartDraw(){
+        playerInput.SwitchCurrentActionMap("Drawing");
+
+    }
+
     #endregion
 
     #region ActionMap Draw
+
+    bool isClicked = false;
     void OnClick(){
-        DrawManager.instance.isClicked = !DrawManager.instance.isClicked;
+        isClicked = !isClicked;
+
+        if(isClicked)
+            DrawManager.instance.StartDrawing();
+        else 
+            DrawManager.instance.EndDrawing();
+    }
+
+    void OnEndDraw(){
+        isClicked = false;
+        playerInput.SwitchCurrentActionMap("Player");
+        DrawManager.instance.EndDrawing();
+
     }
 
     #endregion

@@ -8,8 +8,12 @@ public class DrawManager : MonoBehaviour
 
     [Header("Refs")]
     public Camera cam;
-    public GameObject brush;
+    public GameObject brushCollider;
     public GameObject brushPrefab;
+    private GameObject brushInstance;
+
+    [Header("Triggers")]
+    [SerializeField] DrawTrigger[] trigger;
 
     LineRenderer currentLineRenderer;
     Vector3 lastPos;
@@ -43,8 +47,21 @@ public class DrawManager : MonoBehaviour
         if(lastPos != mousePos){
             AddAPoint(mousePos);
             lastPos = mousePos;
+            GameObject brushCollider = IstantiateBrushCollider();
+            brushCollider.transform.parent = brushInstance.transform;
         }
     }
+
+    public void StartDrawing(){
+        isClicked = true;
+    }
+
+    
+    public void EndDrawing(){
+        isClicked = false;
+        Destroy(brushInstance);
+        DeactivateAllTriggers();
+    }  
 
     void Draw(){
         if(isClicked){
@@ -52,7 +69,6 @@ public class DrawManager : MonoBehaviour
                 CreateBrush();
                 createdFirstBrush = true;
             }
-
             PointToMouse();
         } else {
             currentLineRenderer = null;
@@ -63,11 +79,21 @@ public class DrawManager : MonoBehaviour
     }
 
     void CreateBrush(){
-        GameObject brushInstance = Instantiate(brushPrefab);
+        brushInstance = Instantiate(brushPrefab);
         currentLineRenderer = brushInstance.GetComponent<LineRenderer>();
         Vector3 mousePos = GetMousePosition();
         currentLineRenderer.SetPosition(0, mousePos);
         currentLineRenderer.SetPosition(1, mousePos);
+    }
+
+    void DeactivateAllTriggers(){
+        foreach(DrawTrigger drawTrigger in trigger){
+            drawTrigger.isActive = false;
+        }
+    }
+
+    GameObject IstantiateBrushCollider(){
+        return Instantiate(brushCollider, lastPos, Quaternion.identity);
     }
 
     Vector3 GetMousePosition(){

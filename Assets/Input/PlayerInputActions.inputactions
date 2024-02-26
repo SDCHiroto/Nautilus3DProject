@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Click",
-                    "type": "Button",
-                    "id": "680f2583-137f-4563-838c-608a76dcef1c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press(behavior=2)",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Sprint",
                     "type": "Button",
                     "id": "22889043-71fc-40eb-8c88-adf2424aaedd",
@@ -60,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenMenu",
+                    "name": "StartDraw",
                     "type": "Button",
                     "id": "ecf45556-6358-4caf-9649-f51956cbf9c4",
                     "expectedControlType": "Button",
@@ -275,29 +266,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e80fbc0e-54ca-4b7e-860b-99cdd8822069",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4d8534a6-cddd-4fe4-8789-b52d41c893a4",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Click",
+                    "action": "StartDraw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -831,6 +800,15 @@
                     "processors": "",
                     "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "EndDraw",
+                    "type": "Button",
+                    "id": "e2bf416e-bb97-45a4-a33b-24cca2b67a3f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -853,6 +831,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8811d34a-5b61-4f9a-8e9c-a673ecc11f8e",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndDraw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -37,15 +37,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Click"",
-                    ""type"": ""Button"",
-                    ""id"": ""680f2583-137f-4563-838c-608a76dcef1c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)"",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""22889043-71fc-40eb-8c88-adf2424aaedd"",
@@ -82,7 +73,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""OpenMenu"",
+                    ""name"": ""StartDraw"",
                     ""type"": ""Button"",
                     ""id"": ""ecf45556-6358-4caf-9649-f51956cbf9c4"",
                     ""expectedControlType"": ""Button"",
@@ -297,29 +288,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OpenMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e80fbc0e-54ca-4b7e-860b-99cdd8822069"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4d8534a6-cddd-4fe4-8789-b52d41c893a4"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Click"",
+                    ""action"": ""StartDraw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -853,6 +822,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EndDraw"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2bf416e-bb97-45a4-a33b-24cca2b67a3f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -875,6 +853,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8811d34a-5b61-4f9a-8e9c-a673ecc11f8e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EndDraw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -947,12 +936,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_OpenMenu = m_Player.FindAction("OpenMenu", throwIfNotFound: true);
+        m_Player_StartDraw = m_Player.FindAction("StartDraw", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -968,6 +956,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Drawing
         m_Drawing = asset.FindActionMap("Drawing", throwIfNotFound: true);
         m_Drawing_Click = m_Drawing.FindAction("Click", throwIfNotFound: true);
+        m_Drawing_EndDraw = m_Drawing.FindAction("EndDraw", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1030,23 +1019,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Click;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_OpenMenu;
+    private readonly InputAction m_Player_StartDraw;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Click => m_Wrapper.m_Player_Click;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @OpenMenu => m_Wrapper.m_Player_OpenMenu;
+        public InputAction @StartDraw => m_Wrapper.m_Player_StartDraw;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1059,9 +1046,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Click.started += instance.OnClick;
-            @Click.performed += instance.OnClick;
-            @Click.canceled += instance.OnClick;
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
@@ -1074,9 +1058,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @OpenMenu.started += instance.OnOpenMenu;
-            @OpenMenu.performed += instance.OnOpenMenu;
-            @OpenMenu.canceled += instance.OnOpenMenu;
+            @StartDraw.started += instance.OnStartDraw;
+            @StartDraw.performed += instance.OnStartDraw;
+            @StartDraw.canceled += instance.OnStartDraw;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1084,9 +1068,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Click.started -= instance.OnClick;
-            @Click.performed -= instance.OnClick;
-            @Click.canceled -= instance.OnClick;
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
@@ -1099,9 +1080,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @OpenMenu.started -= instance.OnOpenMenu;
-            @OpenMenu.performed -= instance.OnOpenMenu;
-            @OpenMenu.canceled -= instance.OnOpenMenu;
+            @StartDraw.started -= instance.OnStartDraw;
+            @StartDraw.performed -= instance.OnStartDraw;
+            @StartDraw.canceled -= instance.OnStartDraw;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1242,11 +1223,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Drawing;
     private List<IDrawingActions> m_DrawingActionsCallbackInterfaces = new List<IDrawingActions>();
     private readonly InputAction m_Drawing_Click;
+    private readonly InputAction m_Drawing_EndDraw;
     public struct DrawingActions
     {
         private @PlayerInputActions m_Wrapper;
         public DrawingActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Click => m_Wrapper.m_Drawing_Click;
+        public InputAction @EndDraw => m_Wrapper.m_Drawing_EndDraw;
         public InputActionMap Get() { return m_Wrapper.m_Drawing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1259,6 +1242,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Click.started += instance.OnClick;
             @Click.performed += instance.OnClick;
             @Click.canceled += instance.OnClick;
+            @EndDraw.started += instance.OnEndDraw;
+            @EndDraw.performed += instance.OnEndDraw;
+            @EndDraw.canceled += instance.OnEndDraw;
         }
 
         private void UnregisterCallbacks(IDrawingActions instance)
@@ -1266,6 +1252,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Click.started -= instance.OnClick;
             @Click.performed -= instance.OnClick;
             @Click.canceled -= instance.OnClick;
+            @EndDraw.started -= instance.OnEndDraw;
+            @EndDraw.performed -= instance.OnEndDraw;
+            @EndDraw.canceled -= instance.OnEndDraw;
         }
 
         public void RemoveCallbacks(IDrawingActions instance)
@@ -1331,12 +1320,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnClick(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnOpenMenu(InputAction.CallbackContext context);
+        void OnStartDraw(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1354,5 +1342,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IDrawingActions
     {
         void OnClick(InputAction.CallbackContext context);
+        void OnEndDraw(InputAction.CallbackContext context);
     }
 }
