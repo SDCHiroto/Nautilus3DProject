@@ -10,6 +10,7 @@ public class Grabbable : MonoBehaviour
     public Transform grabHolder;
     public BoxCollider boxCollider;
     private Vector3 originalPosition;
+    public string interactionDescription;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();

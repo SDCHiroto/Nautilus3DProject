@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
 
     void OnStartDraw(){
         playerInput.SwitchCurrentActionMap("Drawing");
-
+        MenuManager.instance.OpenDrawCanvas();
     }
 
     #endregion
@@ -66,8 +66,8 @@ public class InputManager : MonoBehaviour
     void OnEndDraw(){
         isClicked = false;
         playerInput.SwitchCurrentActionMap("Player");
+        MenuManager.instance.CloseDrawCanvas();
         DrawManager.instance.EndDrawing();
-
     }
 
     #endregion

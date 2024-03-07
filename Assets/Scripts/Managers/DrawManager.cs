@@ -11,7 +11,6 @@ public class DrawManager : MonoBehaviour
     public GameObject brushCollider;
     public GameObject brushPrefab;
     private GameObject brushInstance;
-    private DrawRecognization recognization = DrawRecognization.instance;
 
     [Header("Triggers")]
     [SerializeField] DrawTrigger[] trigger;
@@ -29,8 +28,6 @@ public class DrawManager : MonoBehaviour
             instance = this;
 
         cam = Camera.main;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void Update() {
@@ -61,7 +58,7 @@ public class DrawManager : MonoBehaviour
     public void EndDrawing(){
         isClicked = false;
         Destroy(brushInstance);
-        recognization.RecognizeSymbol();
+        DrawRecognization.instance.RecognizeSymbol();
         DeactivateAllTriggers();
     }  
 
@@ -93,7 +90,7 @@ public class DrawManager : MonoBehaviour
             drawTrigger.isActive = false;
         }
 
-        recognization.Reset();
+        DrawRecognization.instance.Reset();
     }
 
     GameObject IstantiateBrushCollider(){
