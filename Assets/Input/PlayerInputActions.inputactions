@@ -9,7 +9,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "d75e076f-efef-4be8-96ef-bc1a18aad82b",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -33,16 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aim",
-                    "type": "Value",
-                    "id": "0feedaf9-b383-42f8-a3ba-ebe1fc98df0d",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Interact",
+                    "name": "SwitchCharacter",
                     "type": "Button",
                     "id": "aeef526e-b9cf-4e61-aa10-99462459627f",
                     "expectedControlType": "Button",
@@ -51,9 +42,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "StartDraw",
+                    "name": "Action",
                     "type": "Button",
-                    "id": "ecf45556-6358-4caf-9649-f51956cbf9c4",
+                    "id": "055da17b-2323-4662-816a-8b8dd9d2d082",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -173,28 +164,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8",
-                    "path": "<XRController>/{Primary2DAxis}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3ea4d645-4504-4529-b061-ab81934c3752",
-                    "path": "<Joystick>/stick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "0d86f224-18c5-42a6-b08b-9687eb3866a2",
                     "path": "<Keyboard>/shift",
                     "interactions": "Press(behavior=2)",
@@ -218,7 +187,7 @@
                 {
                     "name": "",
                     "id": "5b21fab9-f077-406c-bd3d-7de2f3c01b57",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
@@ -228,23 +197,23 @@
                 },
                 {
                     "name": "",
-                    "id": "bff07bc3-8366-4ab5-8c9b-18bb709b723f",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "ScaleVector2(x=50,y=50)",
-                    "groups": "Gamepad",
-                    "action": "Aim",
+                    "id": "a8687794-f833-459f-841a-e55bc3c7e6f4",
+                    "path": "<Keyboard>/j",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "64c4d556-7899-49a3-a085-1b73854a4a5f",
-                    "path": "<Pointer>/delta",
-                    "interactions": "",
+                    "id": "0e6e6b26-d325-463d-a1d2-4c55e614b06b",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "Press",
                     "processors": "",
-                    "groups": "Keyboard&Mouse;Touch",
-                    "action": "Aim",
+                    "groups": "Gamepad",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -255,18 +224,18 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Interact",
+                    "action": "SwitchCharacter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "077459b9-7c96-4b0c-8f41-0a812c251452",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
+                    "id": "f615b920-4628-4d10-b64e-7e715f1dd2dc",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "Press",
                     "processors": "",
-                    "groups": "",
-                    "action": "StartDraw",
+                    "groups": "Gamepad",
+                    "action": "SwitchCharacter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

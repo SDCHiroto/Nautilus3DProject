@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
-{   
-    public string interactionDescription;
+{
+    public virtual void Use(){
 
-    virtual public void Use(){
-        
     }
-
 }

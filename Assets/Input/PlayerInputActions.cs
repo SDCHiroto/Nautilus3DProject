@@ -31,7 +31,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""d75e076f-efef-4be8-96ef-bc1a18aad82b"",
-                    ""expectedControlType"": ""Vector3"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -55,16 +55,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Aim"",
-                    ""type"": ""Value"",
-                    ""id"": ""0feedaf9-b383-42f8-a3ba-ebe1fc98df0d"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Interact"",
+                    ""name"": ""SwitchCharacter"",
                     ""type"": ""Button"",
                     ""id"": ""aeef526e-b9cf-4e61-aa10-99462459627f"",
                     ""expectedControlType"": ""Button"",
@@ -73,9 +64,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""StartDraw"",
+                    ""name"": ""Action"",
                     ""type"": ""Button"",
-                    ""id"": ""ecf45556-6358-4caf-9649-f51956cbf9c4"",
+                    ""id"": ""055da17b-2323-4662-816a-8b8dd9d2d082"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -195,28 +186,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
-                    ""path"": ""<XRController>/{Primary2DAxis}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3ea4d645-4504-4529-b061-ab81934c3752"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""0d86f224-18c5-42a6-b08b-9687eb3866a2"",
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": ""Press(behavior=2)"",
@@ -240,7 +209,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5b21fab9-f077-406c-bd3d-7de2f3c01b57"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -250,23 +219,23 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bff07bc3-8366-4ab5-8c9b-18bb709b723f"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=50,y=50)"",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Aim"",
+                    ""id"": ""a8687794-f833-459f-841a-e55bc3c7e6f4"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""64c4d556-7899-49a3-a085-1b73854a4a5f"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
+                    ""id"": ""0e6e6b26-d325-463d-a1d2-4c55e614b06b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse;Touch"",
-                    ""action"": ""Aim"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -277,18 +246,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Interact"",
+                    ""action"": ""SwitchCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""077459b9-7c96-4b0c-8f41-0a812c251452"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
+                    ""id"": ""f615b920-4628-4d10-b64e-7e715f1dd2dc"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""StartDraw"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwitchCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -938,9 +907,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_StartDraw = m_Player.FindAction("StartDraw", throwIfNotFound: true);
+        m_Player_SwitchCharacter = m_Player.FindAction("SwitchCharacter", throwIfNotFound: true);
+        m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1021,9 +989,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Aim;
-    private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_StartDraw;
+    private readonly InputAction m_Player_SwitchCharacter;
+    private readonly InputAction m_Player_Action;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1031,9 +998,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Aim => m_Wrapper.m_Player_Aim;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @StartDraw => m_Wrapper.m_Player_StartDraw;
+        public InputAction @SwitchCharacter => m_Wrapper.m_Player_SwitchCharacter;
+        public InputAction @Action => m_Wrapper.m_Player_Action;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1052,15 +1018,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Aim.started += instance.OnAim;
-            @Aim.performed += instance.OnAim;
-            @Aim.canceled += instance.OnAim;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
-            @StartDraw.started += instance.OnStartDraw;
-            @StartDraw.performed += instance.OnStartDraw;
-            @StartDraw.canceled += instance.OnStartDraw;
+            @SwitchCharacter.started += instance.OnSwitchCharacter;
+            @SwitchCharacter.performed += instance.OnSwitchCharacter;
+            @SwitchCharacter.canceled += instance.OnSwitchCharacter;
+            @Action.started += instance.OnAction;
+            @Action.performed += instance.OnAction;
+            @Action.canceled += instance.OnAction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1074,15 +1037,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Aim.started -= instance.OnAim;
-            @Aim.performed -= instance.OnAim;
-            @Aim.canceled -= instance.OnAim;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
-            @StartDraw.started -= instance.OnStartDraw;
-            @StartDraw.performed -= instance.OnStartDraw;
-            @StartDraw.canceled -= instance.OnStartDraw;
+            @SwitchCharacter.started -= instance.OnSwitchCharacter;
+            @SwitchCharacter.performed -= instance.OnSwitchCharacter;
+            @SwitchCharacter.canceled -= instance.OnSwitchCharacter;
+            @Action.started -= instance.OnAction;
+            @Action.performed -= instance.OnAction;
+            @Action.canceled -= instance.OnAction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1322,9 +1282,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnAim(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
-        void OnStartDraw(InputAction.CallbackContext context);
+        void OnSwitchCharacter(InputAction.CallbackContext context);
+        void OnAction(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
