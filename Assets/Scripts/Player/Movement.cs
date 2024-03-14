@@ -23,6 +23,8 @@ public class Movement : MonoBehaviour
 
 
 
+
+
     protected void OnEnable() {
         horizontal = 0;
         playerInput.enabled = true;
@@ -82,7 +84,7 @@ public class Movement : MonoBehaviour
     }
 
     void OnSwitchCharacter(){
-        SwitchManager.instance.SwitchCharacter();
+        Switch.instance.SwitchCharacter();
     }
 
     protected void OnAction(){
