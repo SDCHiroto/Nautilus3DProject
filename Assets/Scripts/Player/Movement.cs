@@ -15,15 +15,18 @@ public class Movement : MonoBehaviour
     [SerializeField] Transform mesh;
     [SerializeField] Rigidbody rb;
     [SerializeField] PlayerInput playerInput;
+    [SerializeField] public Transform exitPoint;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] Transform groundCheck;
     [SerializeField] float offset;
+    [SerializeField] bool isJumping;
 
-
-
-
+    [Header("Animation")]
+    [SerializeField] Animator anim;
+    [SerializeField] float HorizontalVelocity;
+   
 
     protected void OnEnable() {
         horizontal = 0;
@@ -38,14 +41,20 @@ public class Movement : MonoBehaviour
     protected void Awake() {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-    }
-
-    protected void Update() {
-        
+        anim = GetComponent<Animator>();
     }
     
+    protected void Update(){
+        ManageAnimations();
+    }
+
     protected void FixedUpdate() {
         Move();
+
+        if(isJumping && IsGrounded()){
+            isJumping = false;
+            anim.SetBool("isJumping", isJumping);
+        }
     }
 
     void OnMove(InputValue value){
@@ -62,9 +71,23 @@ public class Movement : MonoBehaviour
         }
     }
 
+    void ManageAnimations(){
+        HorizontalVelocity = rb.velocity.x;
+        anim.SetFloat("HorizontalVelocity", Mathf.Abs(HorizontalVelocity));
+        
+    }
+
     protected void OnJump(){
-        if(IsGrounded())
+        if(IsGrounded()){
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            Invoke("SetIsJumping", 0.1f);
+        }
+            
+    }
+
+    void SetIsJumping(){
+        isJumping = true;
+        anim.SetBool("isJumping", isJumping);
     }
 
     bool IsGrounded(){
@@ -76,11 +99,11 @@ public class Movement : MonoBehaviour
        Gizmos.DrawWireCube(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1 , 0.5f, transform.localScale.z- .4f));
     }
 
-    void Flip(){
+    protected void Flip(){
+        Debug.Log("flip");
         isFacingRight = !isFacingRight;
-        Vector3 localScale = mesh.localScale;
-        localScale.x *= -1;
-        mesh.localScale = localScale;
+        if(isFacingRight) transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, -90 , transform.localRotation.z));
+        else transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, 90 , transform.localRotation.z));
     }
 
     void OnSwitchCharacter(){

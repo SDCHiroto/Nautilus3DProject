@@ -8,13 +8,39 @@ public class ArmStatue : Movement
     [SerializeField] float radiusOfInteraction;
     [SerializeField] LayerMask whatIsInteractable;
     [SerializeField] Interactable interactableObj;
+    [SerializeField] MeshRenderer meshRenderer;
+
+    [Header("Materials")]
+    [SerializeField] Material off;
+    [SerializeField] Material on;
 
     private bool canInteract = false;
 
+    new private void OnEnable() {
+        base.OnEnable();
+        StartControlling();
+    }
+
+    new private void OnDisable(){
+        base.OnDisable();
+        EndControlling();
+    }
+
+    private void Start() {
+        meshRenderer.material = off;
+    }
 
     new void FixedUpdate() {
        base.FixedUpdate(); 
        CheckForInteractions();
+    }
+
+    void StartControlling(){
+        meshRenderer.material = on;
+    }
+
+    void EndControlling(){
+        meshRenderer.material = off;
     }
 
     void CheckForInteractions(){
@@ -26,7 +52,6 @@ public class ArmStatue : Movement
             interactableObj = null;
             canInteract = false;
         }
-        
     }
 
     new void OnAction(){

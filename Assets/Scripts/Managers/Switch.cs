@@ -29,15 +29,36 @@ public class Switch : MonoBehaviour
 
     }
 
+    private void FixedUpdate() {
+        CheckForSwitchCharacter();
+    }
+
     public void SwitchCharacter(){
-        if(canSwap){
+        if(canSwap && !controlling){
             controlledChara = characterSwitchable;
+            controlling = true;
+            playerRef.gameObject.SetActive(false);
+            playerRef.transform.parent = controlledChara.transform;
+            ActivateCorrectMovementScript();
+        } else if(controlling){
+            controlling = false;
+            playerRef.transform.parent = null;
+            playerRef.transform.position = controlledChara.exitPoint.position;
+            controlledChara = playerRef;    
+            playerRef.gameObject.SetActive(true);
             ActivateCorrectMovementScript();
         }
     }
 
-    private void FixedUpdate() {
-        CheckForSwitchCharacter();
+    void CheckForSwitchCharacter(){
+        Collider[] temp = Physics.OverlapSphere(controlledChara.transform.position, rangeOfSwitch, whatIsSwitchable);
+        if(temp.Length > 0){
+            characterSwitchable = temp[0].GetComponent<Movement>();
+            canSwap = true;
+        } else {
+            characterSwitchable = null;
+            canSwap = false;
+        }
     }
 
     public void ActivateCorrectMovementScript(){
@@ -51,16 +72,6 @@ public class Switch : MonoBehaviour
         controlledChara.enabled = true;
     }
 
-    void CheckForSwitchCharacter(){
-        Collider[] temp = Physics.OverlapSphere(controlledChara.transform.position, rangeOfSwitch, whatIsSwitchable);
-        if(temp.Length > 0){
-            characterSwitchable = temp[0].GetComponent<Movement>();
-            canSwap = true;
-        } else {
-            characterSwitchable = null;
-            canSwap = false;
-        }
-    }
 
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(controlledChara.transform.position, rangeOfSwitch);
