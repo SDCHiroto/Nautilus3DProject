@@ -45,18 +45,18 @@ public class Movement : MonoBehaviour
     }
     
     protected void Update(){
-        ManageAnimations();
+        
     }
 
     protected void FixedUpdate() {
         Move();
-
+        ManageAnimations();
         if(isJumping && IsGrounded()){
             isJumping = false;
             anim.SetBool("isJumping", isJumping);
         }
     }
-
+    
     void OnMove(InputValue value){
         horizontal = value.Get<Vector2>().x;
     }
@@ -99,11 +99,12 @@ public class Movement : MonoBehaviour
        Gizmos.DrawWireCube(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1 , 0.5f, transform.localScale.z- .4f));
     }
 
+    [SerializeField] protected float degreesOfRotation;
     protected void Flip(){
         Debug.Log("flip");
         isFacingRight = !isFacingRight;
-        if(isFacingRight) transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, -90 , transform.localRotation.z));
-        else transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, 90 , transform.localRotation.z));
+        if(isFacingRight) transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, degreesOfRotation , transform.localRotation.z));
+        else transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, -degreesOfRotation , transform.localRotation.z));
     }
 
     void OnSwitchCharacter(){

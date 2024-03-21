@@ -8,7 +8,7 @@ public class ArmStatue : Movement
     [SerializeField] float radiusOfInteraction;
     [SerializeField] LayerMask whatIsInteractable;
     [SerializeField] Interactable interactableObj;
-    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] SkinnedMeshRenderer skinnedMeshRenderer;
 
     [Header("Materials")]
     [SerializeField] Material off;
@@ -27,7 +27,6 @@ public class ArmStatue : Movement
     }
 
     private void Start() {
-        meshRenderer.material = off;
     }
 
     new void FixedUpdate() {
@@ -36,11 +35,11 @@ public class ArmStatue : Movement
     }
 
     void StartControlling(){
-        meshRenderer.material = on;
+        skinnedMeshRenderer.material = on;
     }
 
     void EndControlling(){
-        meshRenderer.material = off;
+        skinnedMeshRenderer.material = off;
     }
 
     void CheckForInteractions(){

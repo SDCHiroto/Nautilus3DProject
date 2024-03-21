@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class Gate : Interactable
 {
+
+    [SerializeField] bool isClosed = true;
+
     override public void Use(){
         Debug.Log(" Debug di Gate ");
-        Open();
+        if(isClosed) Open(); else Close();
     }
 
     void Open(){
-        //Apri cancielo
         Debug.Log(" Open ");
-        Destroy(gameObject);
+        isClosed = false;
+        gameObject.SetActive(false);
+    }
+
+    void Close(){
+        isClosed = true;
+        gameObject.SetActive(true);
     }
 }

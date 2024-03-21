@@ -8,7 +8,6 @@ public class Lever : Interactable
     [SerializeField] Interactable connectedObject;
 
     override public void Use(){
-        Debug.Log("Debug di Lever ");
         connectedObject.Use();
     }
 }
