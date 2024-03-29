@@ -7,7 +7,7 @@ public class Switch : MonoBehaviour
     public static Switch instance;
     [Header("Switch Character")]
     [SerializeField] Movement playerRef;
-    [SerializeField] Movement controlledChara;
+    [SerializeField] public Movement controlledChara;
     [SerializeField] float rangeOfSwitch; 
     [SerializeField] LayerMask whatIsSwitchable;
     [SerializeField] Movement characterSwitchable;
