@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] Transform mesh;
-    [SerializeField] Rigidbody rb;
+    [SerializeField] protected Rigidbody rb;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] public Transform exitPoint;
 
