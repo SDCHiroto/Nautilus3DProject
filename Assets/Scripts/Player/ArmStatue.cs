@@ -5,63 +5,63 @@ using UnityEngine;
 public class ArmStatue : Movement
 {
     [Header("Interaction Info")]
-    [SerializeField] float radiusOfInteraction;
-    [SerializeField] LayerMask whatIsInteractable;
-    [SerializeField] Interactable interactableObj;
-    [SerializeField] SkinnedMeshRenderer skinnedMeshRenderer;
+    [SerializeField] float radiusOfInteraction; // Raggio per la ricerca di oggetti interattivi
+    [SerializeField] LayerMask whatIsInteractable; // Maschera per definire cosa è considerato interagibile
+    [SerializeField] Interactable interactableObj; // Oggetto interattivo rilevato
+    [SerializeField] SkinnedMeshRenderer skinnedMeshRenderer; // Riferimento al renderer della mesh
 
     [Header("Materials")]
-    [SerializeField] Material off;
-    [SerializeField] Material on;
+    [SerializeField] Material off; // Materiale quando il controllo è disabilitato
+    [SerializeField] Material on; // Materiale quando il controllo è abilitato
 
-    private bool canInteract = false;
+    private bool canInteract = false; // Flag che indica se è possibile interagire con un oggetto
 
     new private void OnEnable() {
-        base.OnEnable();
-        StartControlling();
+        base.OnEnable(); // Chiamata al metodo OnEnable della classe base (Movement)
+        StartControlling(); // Inizia il controllo
     }
 
     new private void OnDisable(){
-        base.OnDisable();
-        EndControlling();
+        base.OnDisable(); // Chiamata al metodo OnDisable della classe base (Movement)
+        EndControlling(); // Termina il controllo
     }
 
     private void Start() {
+        // Inizio logico di gioco, ma al momento non esegue alcuna operazione
     }
 
     new void FixedUpdate() {
-       base.FixedUpdate(); 
-       CheckForInteractions();
+       base.FixedUpdate(); // Chiamata al metodo FixedUpdate della classe base (Movement)
+       CheckForInteractions(); // Controlla se ci sono oggetti interattivi nel raggio
     }
 
     void StartControlling(){
-        skinnedMeshRenderer.material = on;
+        skinnedMeshRenderer.material = on; // Imposta il materiale della mesh quando il controllo inizia
     }
 
     void EndControlling(){
-        skinnedMeshRenderer.material = off;
+        skinnedMeshRenderer.material = off; // Imposta il materiale della mesh quando il controllo termina
     }
 
     void CheckForInteractions(){
+        // Cerca gli oggetti interattivi nel raggio specificato
         Collider[] temp = Physics.OverlapSphere(this.transform.position, radiusOfInteraction, whatIsInteractable);
         if(temp.Length > 0){
-            interactableObj = temp[0].GetComponent<Interactable>();
-            canInteract = true;
+            interactableObj = temp[0].GetComponent<Interactable>(); // Se viene trovato un oggetto interattivo, lo memorizza
+            canInteract = true; // Imposta il flag di interazione a true
         } else {
-            interactableObj = null;
-            canInteract = false;
+            interactableObj = null; // Se non viene trovato alcun oggetto interattivo, azzera l'oggetto interattivo
+            canInteract = false; // Imposta il flag di interazione a false
         }
     }
 
     new void OnAction(){
-        if(canInteract){
-            Debug.Log(" Debug di ArmStatue");
-            interactableObj.Use();
+        if(canInteract){ // Se è possibile interagire con un oggetto...
+            interactableObj.Use(); // ...utilizza l'oggetto interattivo
         }
     }
 
     new void OnDrawGizmos(){
-        base.OnDrawGizmos();
-        Gizmos.DrawWireSphere(this.transform.position, radiusOfInteraction);
+        Gizmos.DrawWireSphere(this.transform.position, radiusOfInteraction); // Disegna una sfera di gizmo per rappresentare il raggio di interazione
     }
 }
