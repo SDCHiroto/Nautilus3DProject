@@ -20,7 +20,7 @@ public class Switch : MonoBehaviour
             Destroy(this);
         else
             instance = this;
-        }
+    }
 
     private void Start() {
         playerRef = GameObject.Find("Player").GetComponent<Movement>();

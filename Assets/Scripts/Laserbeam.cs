@@ -107,11 +107,11 @@ public class Laserbeam : MonoBehaviour
     }
 
     // Ruota il raggio laser
-    void RotateLaserbeam(){
+    public void RotateLaserbeam(){
         anim.SetTrigger("Rotate"); // Imposta il trigger dell'animazione per la rotazione del raggio laser
     }
 
-    // Evento dell'animazione
+    // Animation Event
     void _DisableWhenRotating(){
         isRotating = !isRotating; // Inverte lo stato della rotazione del raggio laser
         if(laserHitted != null  && !laserHitted.isStartingLaserbeam) {

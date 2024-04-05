@@ -5,9 +5,12 @@ using UnityEngine;
 public class Lever : Interactable
 {
     [Header("References")]
-    [SerializeField] Interactable connectedObject;
+    [SerializeField] Laserbeam[] connectedObject;
 
     override public void Use(){
-        connectedObject.Use();
+        foreach(Laserbeam laser in connectedObject)
+        {
+            laser.RotateLaserbeam();
+        }
     }
 }
