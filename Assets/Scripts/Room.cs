@@ -9,7 +9,7 @@ public class Room : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Character"))
         {
             vcam.SetActive(true);
             FindNearestRespawnPoint();
@@ -35,7 +35,7 @@ public class Room : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Character"))
         {
             vcam.SetActive(false);
         }

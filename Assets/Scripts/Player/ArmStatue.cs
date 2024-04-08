@@ -55,7 +55,7 @@ public class ArmStatue : Movement
         }
     }
 
-    new void OnAction(){
+    protected override void OnAction(){
         if(canInteract){ // Se è possibile interagire con un oggetto...
             interactableObj.Use(); // ...utilizza l'oggetto interattivo
         }

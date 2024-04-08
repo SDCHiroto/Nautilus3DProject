@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public abstract class Movement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] float walkSpeed = 10f; // Velocità di movimento del personaggio
@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour
     [SerializeField] bool isJumping; // Flag che indica se il personaggio sta saltando
 
     [Header("Animation")]
-    [SerializeField] Animator anim; // Riferimento all'Animator del personaggio
+    [SerializeField] protected Animator anim; // Riferimento all'Animator del personaggio
     [SerializeField] float HorizontalVelocity; // Velocità orizzontale del personaggio
 
     protected void OnEnable() {
@@ -47,7 +47,7 @@ public class Movement : MonoBehaviour
 
     protected void FixedUpdate() {
         Move(); // Gestisce il movimento del personaggio
-        ManageAnimations(); // Gestisce le animazioni del personaggio
+        ManageWalkingAnimations(); // Gestisce le animazioni di camminata del personaggio
         if(isJumping && IsGrounded()){
             isJumping = false;
             anim.SetBool("isJumping", isJumping); // Imposta l'animazione di salto a false se il personaggio è a terra
@@ -69,7 +69,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void ManageAnimations(){
+    void ManageWalkingAnimations(){
         HorizontalVelocity = rb.velocity.x; // Ottiene la velocità orizzontale del personaggio
         anim.SetFloat("HorizontalVelocity", Mathf.Abs(HorizontalVelocity)); // Imposta il parametro dell'animazione di velocità orizzontale
     }
@@ -109,7 +109,5 @@ public class Movement : MonoBehaviour
         Switch.instance.SwitchCharacter(); // Chiamata al metodo per cambiare personaggio
     }
 
-    protected void OnAction(){
-        // Metodo per gestire l'azione del personaggio
-    }
+    protected abstract void OnAction();
 }
