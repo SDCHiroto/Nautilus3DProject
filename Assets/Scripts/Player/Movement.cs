@@ -1,13 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class Movement : MonoBehaviour
+public abstract class Movement : MonoBehaviour, IDamageable
 {
     [Header("Movement")]
     [SerializeField] float walkSpeed = 10f; // Velocità di movimento del personaggio
     [SerializeField] float jumpForce = 5f; // Forza del salto
-    private bool isFacingRight = true; // Flag che indica se il personaggio sta guardando verso destra
+    protected bool isFacingRight = true; // Flag che indica se il personaggio sta guardando verso destra
     private float horizontal; // Input orizzontale
+
+    [Header("Health System")]
+    [SerializeField] float currentHealth, maxHealth;
 
     [Header("Refs")]
     [SerializeField] Transform mesh; // Riferimento alla mesh del personaggio
@@ -40,9 +43,14 @@ public abstract class Movement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         anim = GetComponent<Animator>();
     }
-    
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
     protected void Update(){
-        // Questo metodo viene chiamato ad ogni frame, ma al momento non viene utilizzato per questo script
+
     }
 
     protected void FixedUpdate() {
@@ -54,6 +62,13 @@ public abstract class Movement : MonoBehaviour
         }
     }
     
+    public void GetDamage(float damage)
+    {
+        // da continuare se scende < 0 
+        currentHealth -= damage; 
+    }
+
+
     void OnMove(InputValue value){
         horizontal = value.Get<Vector2>().x; // Ottiene l'input orizzontale dal player
     }
