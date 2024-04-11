@@ -66,8 +66,10 @@ public class Switch : MonoBehaviour
         foreach(Movement controllable in allControllable){
             controllable.enabled = false;
             controllable.gameObject.layer = LayerMask.NameToLayer("Controllable");
+            controllable.gameObject.tag = "Character";
         }   
 
+        controlledChara.gameObject.tag = "Player";
         controlledChara.gameObject.layer = LayerMask.NameToLayer("Controlled");
         controlledChara.enabled = true;
     }

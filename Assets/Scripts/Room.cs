@@ -9,27 +9,26 @@ public class Room : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Character"))
+        if (other.CompareTag("Player"))
         {
             vcam.SetActive(true);
-            FindNearestRespawnPoint();
         }
     }
 
-    void FindNearestRespawnPoint()
-    {
-        float minDist = 999f;
-        for(int i = 0; i < respawnPoint.Length; i++)
-        {
-            float dist = Vector3.Distance(respawnPoint[i].transform.position, transform.position);
+    // void FindNearestRespawnPoint()
+    // {
+    //     float minDist = 999f;
+    //     for(int i = 0; i < respawnPoint.Length; i++)
+    //     {
+    //         float dist = Vector3.Distance(respawnPoint[i].transform.position, transform.position);
 
-            if(dist < minDist)
-            {
-                minDist = dist;
-                SpawnManager.instance.SetCurrentSpawnPoint(respawnPoint[i].position);
-            }
-        }
-    }
+    //         if(dist < minDist)
+    //         {
+    //             minDist = dist;
+    //             SpawnManager.instance.SetCurrentSpawnPoint(respawnPoint[i].position);
+    //         }
+    //     }
+    // }
 
 
 

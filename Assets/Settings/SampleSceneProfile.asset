@@ -21,7 +21,7 @@ MonoBehaviour:
     m_Value: 0.5
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 4
   scatter:
     m_OverrideState: 0
     m_Value: 1
@@ -106,13 +106,13 @@ MonoBehaviour:
   active: 0
   type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 9
   intensity:
     m_OverrideState: 1
-    m_Value: 0.401
+    m_Value: 0.269
   response:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.791
   texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -211,13 +211,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   postExposure:
     m_OverrideState: 0
     m_Value: 0
   contrast:
     m_OverrideState: 1
-    m_Value: 11.3
+    m_Value: 29.7
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
