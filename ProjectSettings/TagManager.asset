@@ -44,3 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: 2DSprites
+    uniqueID: 1098417425
+    locked: 0
