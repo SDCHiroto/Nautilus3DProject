@@ -37,15 +37,10 @@ public class Switch : MonoBehaviour
         if(canSwap && !controlling){
             controlledChara = characterSwitchable;
             controlling = true;
-            playerRef.gameObject.SetActive(false);
-            playerRef.transform.parent = controlledChara.transform;
             ActivateCorrectMovementScript();
         } else if(controlling){
             controlling = false;
-            playerRef.transform.parent = null;
-            playerRef.transform.position = controlledChara.exitPoint.position;
             controlledChara = playerRef;    
-            playerRef.gameObject.SetActive(true);
             ActivateCorrectMovementScript();
         }
     }

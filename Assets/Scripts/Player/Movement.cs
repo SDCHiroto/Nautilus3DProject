@@ -19,7 +19,8 @@ public abstract class Movement : MonoBehaviour, IDamageable
     [SerializeField] public Transform exitPoint; // Punto di uscita del personaggio
 
     [Header("Ground Check")]
-    [SerializeField] LayerMask whatIsGround; // Maschera per definire cosa è considerato terreno
+    [SerializeField] LayerMask whatIsJumpSurface; // Maschera per definire cosa è considerato terreno per permettere al giocatore di saltare
+    [SerializeField] LayerMask whatIsGround; // Maschera per definire SOLO il layer del terreno
     [SerializeField] Transform groundCheck; // Punto di controllo per verificare se il personaggio è a terra
     [SerializeField] float offset; // Offset per il controllo del terreno
     [SerializeField] bool isJumping; // Flag che indica se il personaggio sta saltando
@@ -90,7 +91,7 @@ public abstract class Movement : MonoBehaviour, IDamageable
     }
 
     protected void OnJump(){
-        if(IsGrounded()){ // Controlla se il personaggio è a terra prima di saltare
+        if(canJump()){ // Controlla se il personaggio è a terra prima di saltare
             rb.velocity = new Vector2(rb.velocity.x, jumpForce); // Applica la forza del salto al personaggio
             Invoke("SetIsJumping", 0.1f); // Invoca il metodo per impostare il flag di salto dopo un breve ritardo
         }
@@ -102,9 +103,16 @@ public abstract class Movement : MonoBehaviour, IDamageable
         anim.SetBool("isJumping", isJumping); // Imposta l'animazione di salto a true
     }
 
+    bool canJump(){
+        // Controlla se il personaggio è a terra usando una sfera di collisione
+        return Physics.OverlapBox(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1f/2, 0.5f/2, transform.localScale.z - .4f/2),
+        Quaternion.identity, whatIsJumpSurface).Length > 0 ? true : false;
+    }
+
     bool IsGrounded(){
         // Controlla se il personaggio è a terra usando una sfera di collisione
-        return Physics.OverlapBox(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1f/2, 0.5f/2, transform.localScale.z - .4f/2),Quaternion.identity, whatIsGround).Length > 0 ? true : false;
+        return Physics.OverlapBox(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1f/2, 0.5f/2, transform.localScale.z - .4f/2),
+        Quaternion.identity, whatIsGround).Length > 0 ? true : false;
     }
     
 
@@ -120,8 +128,12 @@ public abstract class Movement : MonoBehaviour, IDamageable
         else transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, -degreesOfRotation , transform.localRotation.z));
     }
 
-    void OnSwitchCharacter(){
-        Switch.instance.SwitchCharacter(); // Chiamata al metodo per cambiare personaggio
+    protected void OnSwitchCharacter(){
+        if(IsGrounded()){
+            SwitchManager.instance.SwitchCharacter(); // Chiamata al metodo per cambiare personaggio
+            Debug.Log(gameObject.name);
+        }
+           
     }
 
     protected abstract void OnAction();
