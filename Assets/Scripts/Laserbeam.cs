@@ -41,6 +41,9 @@ public class Laserbeam : MonoBehaviour
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>(); // Aggiunge un LineRenderer al GameObject
         lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Imposta il materiale del LineRenderer
+
+        Color color = new Color(0, 1, 1, 1);
+        lineRenderer.SetColors(color,color);
         lineRenderer.startWidth = 0.1f; // Imposta la larghezza iniziale del raggio
         lineRenderer.endWidth = 0.1f; // Imposta la larghezza finale del raggio
         lineRenderer.positionCount = 2; // Imposta il numero di punti del raggio (inizio e fine)
