@@ -6,11 +6,11 @@ public class Switch : MonoBehaviour
 {
     public static Switch instance;
     [Header("Switch Character")]
-    [SerializeField] Movement playerRef;
-    [SerializeField] public Movement controlledChara;
+    [SerializeField] Controllable playerRef;
+    [SerializeField] public Controllable controlledChara;
     [SerializeField] float rangeOfSwitch; 
     [SerializeField] LayerMask whatIsSwitchable;
-    [SerializeField] Movement characterSwitchable;
+    [SerializeField] Controllable characterSwitchable;
     
     private bool canSwap = false;
     private bool controlling = false;
@@ -23,7 +23,7 @@ public class Switch : MonoBehaviour
     }
 
     private void Start() {
-        playerRef = GameObject.Find("Player").GetComponent<Movement>();
+        playerRef = GameObject.Find("Player").GetComponent<Controllable>();
         controlledChara = playerRef;
         ActivateCorrectMovementScript();
 
@@ -48,7 +48,7 @@ public class Switch : MonoBehaviour
     void CheckForSwitchCharacter(){
         Collider[] temp = Physics.OverlapSphere(controlledChara.transform.position, rangeOfSwitch, whatIsSwitchable);
         if(temp.Length > 0){
-            characterSwitchable = temp[0].GetComponent<Movement>();
+            characterSwitchable = temp[0].GetComponent<Controllable>();
             canSwap = true;
         } else {
             characterSwitchable = null;
@@ -57,8 +57,8 @@ public class Switch : MonoBehaviour
     }
 
     public void ActivateCorrectMovementScript(){
-        Movement[] allControllable = GameObject.FindObjectsByType<Movement>(FindObjectsSortMode.None);
-        foreach(Movement controllable in allControllable){
+        Controllable[] allControllable = GameObject.FindObjectsByType<Controllable>(FindObjectsSortMode.None);
+        foreach(Controllable controllable in allControllable){
             controllable.enabled = false;
             controllable.gameObject.layer = LayerMask.NameToLayer("Controllable");
             controllable.gameObject.tag = "Character";

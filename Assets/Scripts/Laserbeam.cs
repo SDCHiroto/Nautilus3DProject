@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Laserbeam : MonoBehaviour
+public class Laserbeam : MonoBehaviour, IPowerable
 {
     public float maxLength = 50f; // Lunghezza massima del raggio laser
     public LayerMask whatIsGround; // Maschera per definire cosa è considerato terreno
@@ -28,7 +28,7 @@ public class Laserbeam : MonoBehaviour
         // Se questo è un raggio laser iniziale, attivalo immediatamente
         if (isStartingLaserbeam)
         {
-            Activate(); // Attiva il raggio laser
+            Power(); // Attiva il raggio laser
         }
         else
         {
@@ -79,7 +79,7 @@ public class Laserbeam : MonoBehaviour
 
                 if(hit.collider.GetComponent<Laserbeam>() != null)  {
                     laserHitted = hit.collider.GetComponent<Laserbeam>(); // Memorizza il raggio laser colpito
-                    laserHitted?.Activate(); // Attiva il raggio laser colpito
+                    laserHitted?.Power(); // Attiva il raggio laser colpito
                 } else {
                     if(laserHitted != null && !laserHitted.isStartingLaserbeam){
                         laserHitted.Deactivate(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
@@ -124,7 +124,7 @@ public class Laserbeam : MonoBehaviour
     }
 
     // Attiva il raggio laser
-    public void Activate()
+    public void Power()
     {
         isActive = true; // Imposta il flag di attivazione del raggio laser su true
         lineRenderer.enabled = true; // Abilita il LineRenderer

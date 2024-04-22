@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmStatue : Movement
+public class ArmStatue : Controllable
 {
     [Header("Interaction Info")]
     [SerializeField] float radiusOfInteraction; // Raggio per la ricerca di oggetti interattivi
@@ -17,21 +17,21 @@ public class ArmStatue : Movement
     private bool canInteract = false; // Flag che indica se è possibile interagire con un oggetto
 
     new private void OnEnable() {
-        base.OnEnable(); // Chiamata al metodo OnEnable della classe base (Movement)
+        base.OnEnable(); // Chiamata al metodo OnEnable della classe base (Controllable.cs)
         StartControlling(); // Inizia il controllo
     }
 
     new private void OnDisable(){
-        base.OnDisable(); // Chiamata al metodo OnDisable della classe base (Movement)
+        base.OnDisable(); // Chiamata al metodo OnDisable della classe base (Controllable.cs)
         EndControlling(); // Termina il controllo
     }
 
     private void Start() {
-        // Inizio logico di gioco, ma al momento non esegue alcuna operazione
+
     }
 
     new void FixedUpdate() {
-       base.FixedUpdate(); // Chiamata al metodo FixedUpdate della classe base (Movement)
+       base.FixedUpdate(); // Chiamata al metodo FixedUpdate della classe base (Controllable.cs)
        CheckForInteractions(); // Controlla se ci sono oggetti interattivi nel raggio
     }
 

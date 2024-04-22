@@ -39,7 +39,7 @@ public class SwitchManager : MonoBehaviour
     }
 
     void ResetToPlayer(){
-            controlled.GetComponent<Movement>().enabled = false;
+            controlled.GetComponent<Controllable>().enabled = false;
             controlled = player.gameObject;
             playerIsInControl = true;
             currentIndex = -1;
@@ -71,7 +71,7 @@ public class SwitchManager : MonoBehaviour
     int currentIndex = -1;
     public void SwitchCharacter(){
         if(visible.Count > 0){
-            controlled.GetComponent<Movement>().enabled = false;
+            controlled.GetComponent<Controllable>().enabled = false;
             currentIndex++;
             if(currentIndex >= visible.Count){
                 currentIndex = -1;
@@ -88,12 +88,12 @@ public class SwitchManager : MonoBehaviour
     }
 
     public void ActivateCorrectMovementScript(){
-        Movement[] allControllable = GameObject.FindObjectsByType<Movement>(FindObjectsSortMode.None);
-        foreach(Movement controllable in allControllable){
+        Controllable[] allControllable = GameObject.FindObjectsByType<Controllable>(FindObjectsSortMode.None);
+        foreach(Controllable controllable in allControllable){
             controllable.enabled = false;
         }
 
-        controlled.GetComponent<Movement>().enabled = true;
+        controlled.GetComponent<Controllable>().enabled = true;
     }
 
 
