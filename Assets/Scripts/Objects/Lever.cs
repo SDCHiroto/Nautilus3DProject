@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : Interactable
+public class Lever : MonoBehaviour, IInteractable
 {
     [Header("References")]
-    [SerializeField] Laserbeam[] connectedObject;
+    [SerializeField] IInteractable[] connectedObject;
 
-    override public void Use(){
-        foreach(Laserbeam laser in connectedObject)
+    public void Interact(){
+        foreach(IInteractable obj in connectedObject)
         {
-            laser.RotateLaserbeam();
+            obj.Interact();
         }
     }
 }

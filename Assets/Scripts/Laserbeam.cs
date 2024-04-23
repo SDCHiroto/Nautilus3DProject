@@ -87,10 +87,10 @@ public class Laserbeam : MonoBehaviour, IPowerable
                     }
                 }
 
-                if(hit.collider.GetComponent<Gate>() != null){
-                    gateHitted = hit.collider.GetComponent<Gate>(); // Memorizza il cancello colpito
-                    gateHitted?.Use(); // Usa il cancello colpito
-                }
+                //if(hit.collider.GetComponent<Gate>() != null){
+                //    gateHitted = hit.collider.GetComponent<Gate>(); // Memorizza il cancello colpito
+                //    gateHitted?.Use(); // Usa il cancello colpito
+                //}
             }
             else
             {

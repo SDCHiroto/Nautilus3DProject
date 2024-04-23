@@ -5,7 +5,7 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Interactable connectedObject;
+    //[SerializeField] Interactable connectedObject;
 
     public bool isActive = false;
 
@@ -14,7 +14,7 @@ public class PressurePlate : MonoBehaviour
         if(other.tag == "Character")
         {
             isActive = true;
-            connectedObject.Use();
+            //connectedObject.Use();
         }
     }
 
@@ -23,7 +23,7 @@ public class PressurePlate : MonoBehaviour
         if (other.tag == "Character")
         {
             isActive = false;
-            connectedObject.Use();
+            //connectedObject.Use();
         }
     }
 

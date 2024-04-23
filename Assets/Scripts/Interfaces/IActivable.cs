@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public interface IActivable 
 {
-    public virtual void Use(){
-
-    }
+    public void Activate();
 }

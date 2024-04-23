@@ -15,6 +15,7 @@ public class ShootGolem : Controllable
             GameObject bullet = PoolingManager.instance.GetPooledObject(); 
             if (bullet != null) {
                 bullet.transform.position = spawnPoint.position;
+                bullet.transform.rotation = spawnPoint.rotation;
                 bullet.SetActive(true);
              }
             canShoot = false;

@@ -126,9 +126,15 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
     [SerializeField] protected float degreesOfRotation; // Gradi di rotazione per il flip
     protected void Flip(){
         isFacingRight = !isFacingRight; // Inverte la direzione in cui il personaggio sta guardando
-                // Ruota il personaggio di 180 gradi se sta guardando verso sinistra, altrimenti lo ruota nella posizione originale
-        if(isFacingRight) transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, 90 , transform.localRotation.z));
-        else transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, degreesOfRotation , transform.localRotation.z));
+        if (isFacingRight)
+        {
+            transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, 90, transform.localRotation.z));
+        }
+        else
+        {
+            transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, degreesOfRotation, transform.localRotation.z));
+        }
+
     }
 
     protected void OnSwitchCharacter(){
