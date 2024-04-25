@@ -8,7 +8,6 @@ public class ArmStatue : Controllable
     [SerializeField] float radiusOfInteraction; // Raggio per la ricerca di oggetti interattivi
     [SerializeField] LayerMask whatIsInteractable; // Maschera per definire cosa è considerato interagibile
     [SerializeField] IInteractable interactableObj; // Oggetto interattivo rilevato
-    [SerializeField] SkinnedMeshRenderer skinnedMeshRenderer; // Riferimento al renderer della mesh
 
     [Header("Materials")]
     [SerializeField] Material off; // Materiale quando il controllo è disabilitato
@@ -46,9 +45,8 @@ public class ArmStatue : Controllable
     void CheckForInteractions(){
         // Cerca gli oggetti interattivi nel raggio specificato
         Collider[] temp = Physics.OverlapSphere(this.transform.position, radiusOfInteraction, whatIsInteractable);
-        if(temp.Length > 0){
-            if (temp[0].gameObject.TryGetComponent(out IInteractable objInteractable))
-                interactableObj = objInteractable; // Se viene trovato un oggetto interattivo, lo memorizza
+        if(temp.Length > 0 && temp[0].gameObject.TryGetComponent(out IInteractable objInteractable)){
+            interactableObj = objInteractable; // Se viene trovato un oggetto Interactable, lo memorizza
             canInteract = true; // Imposta il flag di interazione a true
         } else {
             interactableObj = null; // Se non viene trovato alcun oggetto interattivo, azzera l'oggetto interattivo
@@ -58,7 +56,7 @@ public class ArmStatue : Controllable
 
     protected override void OnAction(){
         if(canInteract){ // Se è possibile interagire con un oggetto...
-            interactableObj.Use(); // ...utilizza l'oggetto interattivo
+            interactableObj.Interact(); // ...utilizza l'oggetto interattivo
         }
     }
 

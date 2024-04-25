@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Laserbeam : MonoBehaviour, IPowerable
+public class Laserbeam : MonoBehaviour, IPowerable, IActivable
 {
     public float maxLength = 50f; // Lunghezza massima del raggio laser
     public LayerMask whatIsGround; // Maschera per definire cosa è considerato terreno
@@ -43,7 +43,7 @@ public class Laserbeam : MonoBehaviour, IPowerable
         lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Imposta il materiale del LineRenderer
 
         Color color = new Color(0, 1, 1, 1);
-        lineRenderer.SetColors(color,color);
+        lineRenderer.startColor = color; lineRenderer.endColor = color;
         lineRenderer.startWidth = 0.1f; // Imposta la larghezza iniziale del raggio
         lineRenderer.endWidth = 0.1f; // Imposta la larghezza finale del raggio
         lineRenderer.positionCount = 2; // Imposta il numero di punti del raggio (inizio e fine)
@@ -56,14 +56,11 @@ public class Laserbeam : MonoBehaviour, IPowerable
             ShootLaser(); // Spara il raggio laser se è attivo
         } else {
             if(laserHitted != null && !laserHitted.isStartingLaserbeam){
-                laserHitted.Deactivate(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
+                laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
                 laserHitted = null;
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.R)){
-            RotateLaserbeam(); // Ruota il raggio laser
-        }
     }
 
     // Spara il raggio laser
@@ -79,18 +76,18 @@ public class Laserbeam : MonoBehaviour, IPowerable
 
                 if(hit.collider.GetComponent<Laserbeam>() != null)  {
                     laserHitted = hit.collider.GetComponent<Laserbeam>(); // Memorizza il raggio laser colpito
-                    laserHitted?.Power(); // Attiva il raggio laser colpito
+                    laserHitted?.On(); // Attiva il raggio laser colpito
                 } else {
                     if(laserHitted != null && !laserHitted.isStartingLaserbeam){
-                        laserHitted.Deactivate(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
+                        laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
                         laserHitted = null;
                     }
                 }
 
-                //if(hit.collider.GetComponent<Gate>() != null){
-                //    gateHitted = hit.collider.GetComponent<Gate>(); // Memorizza il cancello colpito
-                //    gateHitted?.Use(); // Usa il cancello colpito
-                //}
+                if(hit.collider.GetComponent<Gate>() != null){
+                    gateHitted = hit.collider.GetComponent<Gate>(); // Memorizza il cancello colpito
+                    gateHitted?.Open(); // Usa il cancello colpito
+                }
             }
             else
             {
@@ -98,7 +95,7 @@ public class Laserbeam : MonoBehaviour, IPowerable
                 lineRenderer.SetPosition(1, transform.position + transform.forward * maxLength); // Imposta la posizione finale del raggio laser (massima lunghezza)
 
                 if(laserHitted != null && !laserHitted.isStartingLaserbeam) {
-                    laserHitted.Deactivate(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
+                    laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
                     laserHitted = null;
                 }
             }
@@ -118,23 +115,32 @@ public class Laserbeam : MonoBehaviour, IPowerable
     void _DisableWhenRotating(){
         isRotating = !isRotating; // Inverte lo stato della rotazione del raggio laser
         if(laserHitted != null  && !laserHitted.isStartingLaserbeam) {
-            laserHitted.Deactivate(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
+            laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
             laserHitted = null;
         }
     }
 
-    // Attiva il raggio laser
-    public void Power()
+        // Attiva il raggio laser
+    public void On()
     {
         isActive = true; // Imposta il flag di attivazione del raggio laser su true
         lineRenderer.enabled = true; // Abilita il LineRenderer
     }
 
     // Disattiva il raggio laser
-    public void Deactivate()
+    public void Off()
     {
         isActive = false; // Imposta il flag di attivazione del raggio laser su false
         lineRenderer.enabled = false; // Disabilita il LineRenderer
     }
 
+    public void Activate()
+    {
+        RotateLaserbeam();
+    }
+
+    public void Power()
+    {
+        On();
+    }
 }

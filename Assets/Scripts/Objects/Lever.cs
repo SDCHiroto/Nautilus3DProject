@@ -5,12 +5,15 @@ using UnityEngine;
 public class Lever : MonoBehaviour, IInteractable
 {
     [Header("References")]
-    [SerializeField] IInteractable[] connectedObject;
+    [SerializeField] GameObject[] connectedObject;
 
     public void Interact(){
-        foreach(IInteractable obj in connectedObject)
+        foreach(GameObject obj in connectedObject)
         {
-            obj.Interact();
+            if (obj.TryGetComponent(out IActivable objHitted)){
+                objHitted.Activate();
+            }
+            
         }
     }
 }

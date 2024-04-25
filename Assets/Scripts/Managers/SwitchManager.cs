@@ -14,6 +14,7 @@ public class SwitchManager : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] Transform player;
+    [SerializeField] Material outlineMat;
 
     bool playerIsInControl = true;
  
@@ -27,6 +28,7 @@ public class SwitchManager : MonoBehaviour
     private void Start() {
         player = GameObject.Find("Player").transform;
         controlled = player.gameObject;
+        characters = GameObject.FindGameObjectsWithTag("Character");
         ActivateCorrectMovementScript();
     }
 
@@ -42,16 +44,15 @@ public class SwitchManager : MonoBehaviour
             controlled.GetComponent<Controllable>().enabled = false;
             controlled = player.gameObject;
             playerIsInControl = true;
-            currentIndex = -1;
             ActivateCorrectMovementScript();
         
     }
 
+    GameObject nearestCharacter;
+
     private void FindNearestControllableCharacter()
     {   
         RaycastHit hit;
-
-        characters = GameObject.FindGameObjectsWithTag("Character");
         for(int i = 0; i < characters.Length; i++){
             Vector3 direction = characters[i].transform.position - player.transform.position;
             Physics.Raycast(player.transform.position, direction, out hit, 999);
@@ -62,29 +63,46 @@ public class SwitchManager : MonoBehaviour
                 }
             } else {
                 if(visible.Contains(characters[i])) {
+                    characters[i].GetComponent<Controllable>().RemoveOutline();
                     visible.Remove(characters[i]);
                 }
             }
         }
-    }
 
-    int currentIndex = -1;
-    public void SwitchCharacter(){
-        if(visible.Count > 0){
-            controlled.GetComponent<Controllable>().enabled = false;
-            currentIndex++;
-            if(currentIndex >= visible.Count){
-                currentIndex = -1;
-                controlled = player.gameObject;
-                playerIsInControl = true;
-            } else {
-                controlled = visible[currentIndex];      
-                playerIsInControl = false;          
+        if(playerIsInControl){
+            float min_dist = Mathf.Infinity;
+            foreach(GameObject golem in visible){
+                float temp_dist = Vector3.Distance(player.transform.position, golem.transform.position);
+                if( temp_dist < min_dist ){
+                    min_dist = temp_dist;
+                    nearestCharacter = golem;
+                }
             }
 
-            ActivateCorrectMovementScript();
-            // controlled.GetComponent<Movement>().enabled = true;
+            foreach(GameObject golem in visible){
+                golem.GetComponent<Controllable>().RemoveOutline();
+            }
+
+            if(visible.Contains(nearestCharacter)) {
+                nearestCharacter.GetComponent<Controllable>().AddOutline();
+            }
         }
+
+           
+    }
+
+    public void SwitchCharacter(){
+        if(visible.Count > 0 && playerIsInControl){
+            player.GetComponent<Controllable>().enabled = false;
+            controlled = nearestCharacter;
+            playerIsInControl = false;
+        } else {
+            controlled.GetComponent<Controllable>().enabled = false;
+            controlled = player.gameObject;
+            playerIsInControl = true;
+        }
+            ActivateCorrectMovementScript();
+
     }
 
     public void ActivateCorrectMovementScript(){
