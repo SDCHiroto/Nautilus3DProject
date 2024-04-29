@@ -10,6 +10,10 @@ public class ShootGolem : Controllable
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private Transform spawnPoint;
 
+    [Header("Materials")]
+    [SerializeField] Material off; // Materiale quando il controllo è disabilitato
+    [SerializeField] Material on; // Materiale quando il controllo è abilitato
+
     protected override void OnAction(){
          if(canShoot){
             GameObject bullet = PoolingManager.instance.GetPooledObject(); 
@@ -26,5 +30,13 @@ public class ShootGolem : Controllable
     private void ResetAttack()
     {
         canShoot = true;
+    }
+
+    void StartControlling(){
+        skinnedMeshRenderer.material = on; // Imposta il materiale della mesh quando il controllo inizia
+    }
+
+    void EndControlling(){
+        skinnedMeshRenderer.material = off; // Imposta il materiale della mesh quando il controllo termina
     }
 }

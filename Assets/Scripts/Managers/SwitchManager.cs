@@ -13,10 +13,10 @@ public class SwitchManager : MonoBehaviour
     public GameObject controlled;
 
     [Header("Refs")]
-    [SerializeField] Transform player;
+    [SerializeField] Controllable player;
     [SerializeField] Material outlineMat;
 
-    bool playerIsInControl = true;
+    public bool playerIsInControl = true;
  
     void Awake(){
         if(instance != null && instance != this)
@@ -26,7 +26,7 @@ public class SwitchManager : MonoBehaviour
     }
 
     private void Start() {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player").GetComponent<Controllable>();
         controlled = player.gameObject;
         characters = GameObject.FindGameObjectsWithTag("Character");
         ActivateCorrectMovementScript();
@@ -42,7 +42,9 @@ public class SwitchManager : MonoBehaviour
 
     void ResetToPlayer(){
             controlled.GetComponent<Controllable>().enabled = false;
+            controlled.GetComponent<Controllable>().SetisControllingAnimation(false);
             controlled = player.gameObject;
+            player.SetisControllingAnimation(false);
             playerIsInControl = true;
             ActivateCorrectMovementScript();
         
@@ -93,15 +95,20 @@ public class SwitchManager : MonoBehaviour
 
     public void SwitchCharacter(){
         if(visible.Count > 0 && playerIsInControl){
-            player.GetComponent<Controllable>().enabled = false;
+            player.SetisControllingAnimation(true);
+            player.enabled = false;
             controlled = nearestCharacter;
+            controlled.GetComponent<Controllable>().SetisControllingAnimation(true);
             playerIsInControl = false;
         } else {
+            player.SetisControllingAnimation(false);
+            controlled.GetComponent<Controllable>().SetisControllingAnimation(false);
             controlled.GetComponent<Controllable>().enabled = false;
             controlled = player.gameObject;
             playerIsInControl = true;
         }
-            ActivateCorrectMovementScript();
+
+        ActivateCorrectMovementScript();
 
     }
 

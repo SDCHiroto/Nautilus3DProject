@@ -41,6 +41,7 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
     protected void OnDisable() {
         horizontal = 0;
         rb.mass = 999;
+        ManageWalkingAnimations();
         playerInput.enabled = false;
     }
 
@@ -172,7 +173,11 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
 
     protected void OnSwitchCharacter(){
         SwitchManager.instance.SwitchCharacter(); // Chiamata al metodo per cambiare personaggio
-        Debug.Log(gameObject.name);
+
+    }
+
+    public void SetisControllingAnimation(bool temp_bool){
+        anim.SetBool("isControlling", temp_bool);
     }
 
     protected abstract void OnAction();
