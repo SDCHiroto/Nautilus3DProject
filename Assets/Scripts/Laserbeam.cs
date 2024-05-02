@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class Laserbeam : MonoBehaviour, IPowerable, IActivable
 {
-    public float maxLength = 50f; // Lunghezza massima del raggio laser
-    public LayerMask whatIsGround; // Maschera per definire cosa è considerato terreno
-    public bool isStartingLaserbeam = false; // Flag che indica se questo è un raggio laser iniziale
+    [SerializeField] float maxLength = 50f; // Lunghezza massima del raggio laser
+    [SerializeField] LayerMask whatIsGround; // Maschera per definire cosa è considerato terreno
+    [SerializeField] bool isStartingLaserbeam = false; // Flag che indica se questo è un raggio laser iniziale
+
+    [Header("References")]
+    [SerializeField] GameObject centerParticle;
 
     private LineRenderer lineRenderer; // Riferimento al componente LineRenderer
     private bool isActive = false; // Flag che indica se il raggio laser è attivo
@@ -49,13 +52,15 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
         lineRenderer.positionCount = 2; // Imposta il numero di punti del raggio (inizio e fine)
     }
 
-    // Funzione chiamata ad ogni frame
     private void Update()
     {
         if(isActive){
+            centerParticle.SetActive(true);
             ShootLaser(); // Spara il raggio laser se è attivo
         } else {
+            centerParticle.SetActive(false);
             if(laserHitted != null && !laserHitted.isStartingLaserbeam){
+                centerParticle.SetActive(false);
                 laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
                 laserHitted = null;
             }
