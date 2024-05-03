@@ -146,8 +146,6 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
 
     bool CanJump(){
         // Controlla se il personaggio è a terra usando una sfera di collisione
-        Debug.Log(Physics.OverlapBox(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1f/2, 0.5f/2, transform.localScale.z - .4f/2),
-        Quaternion.identity, whatIsJumpSurface).Length > 0 ? true : false);
         return Physics.OverlapBox(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1f/2, 0.5f/2, transform.localScale.z - .4f/2),
         Quaternion.identity, whatIsJumpSurface).Length > 0 ? true : false;
     }
