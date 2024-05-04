@@ -14,6 +14,10 @@ public class Enemy_GolemShoot : MonoBehaviour
     [SerializeField] LayerMask whatIsPlayer;
     [SerializeField] State state = State.Idle;
     [SerializeField] float walkSpeed = 2f;
+    [SerializeField] Animator anim;
+    [SerializeField] GameObject bullet;
+    [SerializeField] float fireRate = 1f;
+    bool canShoot = true;
     public bool isFacingRight;
 
     public bool needToFlip;
@@ -23,6 +27,10 @@ public class Enemy_GolemShoot : MonoBehaviour
     public float degreesOfRotation;
     public LayerMask whatIsGround;
 
+    private void Awake() {
+        anim = this.GetComponent<Animator>();
+    }
+
     private void Start()
     {
         
@@ -31,66 +39,95 @@ public class Enemy_GolemShoot : MonoBehaviour
     private void Update()
     {
         CheckForFloor();
+        CheckForPlayer();
         Debug.Log(state);
         switch (state)
         {
             case State.Idle:
                 //Aspetta X secondi
-
                 Invoke("ToPatrol", 1f);
                 break;
 
             case State.Patrol:
-                //Muoviti e cerca il giocatore
-                CheckForPlayer();
+                //Muoviti 
                 Move();
                 break;
 
             case State.Attack:
-                //Muoviti verso il giocatore se in range e attacca
+                //Spara un proiettile nella direzione dove sta guardando (e quindi dove ha visto il player)
+                Debug.Log("SPAARAAA");
+                if(canShoot){
+                    ShootBullet();
+                }
+
                 break;
 
         }
     }
 
+    void ShootBullet(){
+        canShoot = false;
+        Instantiate(bullet, shootPoint.transform.position, shootPoint.transform.rotation);
+        Invoke("ResetShoot", fireRate);
+    }
+
+    void ResetShoot(){
+        canShoot = true;
+    }
     void CheckForFloor()
     {
         if(!Physics.Raycast(groundCheck.position, -transform.up, 5, whatIsGround) || Physics.Raycast(groundCheck.position, transform.forward, .5f, whatIsGround))
         {
-            Debug.Log("Non c'è il pavimentoolo");
+            Debug.Log("Non c'Ã¨ il pavimentoolo");
             Flip();
+
         } else
         {
-            Debug.Log("CAMMINA");
+            if(state == State.Attack && !isSeeingPlayer){
+                ToIdle();
+                Debug.Log("CAMMINA");
+            }
+            
         }
     }
 
     void Move()
     {
-        //rb.velocity = new Vector2(horizontal * walkSpeed, rb.velocity.y); // Applica la velocità di movimento
+        //rb.velocity = new Vector2(horizontal * walkSpeed, rb.velocity.y); // Applica la velocitï¿½ di movimento
         this.transform.position += transform.forward * walkSpeed * Time.deltaTime;
     }
+
     private void CheckForPlayer()
     {
         RaycastHit hit;
-        if(Physics.Raycast(shootPoint.position, transform.forward, out hit, range, whatIsPlayer))
+        if (Physics.Raycast(shootPoint.position, transform.forward, out hit, range))
         {
-            isSeeingPlayer = true;
-            Debug.Log("trovato player");
-        } else
-        {
-            isSeeingPlayer = false;
-            Debug.Log("non vedo il player");
+            // Check if the hit object is the player
+            if (hit.collider.CompareTag("Player"))
+            {
+                ToAttack();
+                Debug.Log("Player found");
+            }
         }
+        else
+        {
+            Debug.Log("Player not detected");
+        }
+    }
+
+    protected void OnDrawGizmos() {
+       Gizmos.DrawRay(shootPoint.position, transform.forward);
     }
 
     void ToPatrol()
     {
+        anim.SetBool("isWalking", true);
         state = State.Patrol;
     }
 
     void ToIdle()
     {
+        anim.SetBool("isWalking", false);
         state = State.Idle;
     }
 

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class LightBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     [SerializeField] float speed = 10f;
     [SerializeField] float lifeTime = 3f;
 
     private float timer;
 
-    private void OnEnable()
+    private void Start()
     {
         timer = lifeTime;
     }
@@ -18,7 +18,7 @@ public class LightBullet : MonoBehaviour
 
         if (timer <= 0f)
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);;
             return;
         }
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
@@ -26,10 +26,11 @@ public class LightBullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out IPowerable objHitted))
+        if (other.gameObject.tag == "Player" || other.gameObject.layer == LayerMask.NameToLayer("Controlled"))
         {
-            objHitted.Power();
+            //colpito giocatore o golem controllato
         }
-        this.gameObject.SetActive(false);
+        
+        Destroy(this.gameObject);
     }
 }

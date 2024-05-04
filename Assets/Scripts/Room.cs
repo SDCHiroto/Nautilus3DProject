@@ -34,7 +34,7 @@ public class Room : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Character"))
+        if (other.CompareTag("Player"))
         {
             vcam.SetActive(false);
         }
