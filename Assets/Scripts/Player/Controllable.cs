@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
+public abstract class Controllable : MonoBehaviour, IPowerable, IDamageable
 {
     [Header("Movement")]
     [SerializeField] float walkSpeed = 10f; // Velocità di movimento del personaggio
@@ -17,7 +17,7 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
     [Header("Refs")]
     [SerializeField] Transform mesh; // Riferimento alla mesh del personaggio
     [SerializeField] protected Rigidbody rb; // Riferimento al Rigidbody del personaggio
-    [SerializeField] PlayerInput playerInput; // Riferimento all'input del giocatore
+    [SerializeField] public PlayerInput playerInput; // Riferimento all'input del giocatore
     [SerializeField] public Transform exitPoint; // Punto di uscita del personaggio
     [SerializeField] public SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] public Material outLineMaterial; 
@@ -28,14 +28,21 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
     [SerializeField] float offset; // Offset per il controllo del terreno
     [SerializeField] bool isJumping; // Flag che indica se il personaggio sta saltando
 
+    [Header("Checkpoint info")]
+    [SerializeField] protected Vector3 checkpoint;
+
     [Header("Animation")]
     [SerializeField] protected Animator anim; // Riferimento all'Animator del personaggio
     [SerializeField] float HorizontalVelocity; // Velocità orizzontale del personaggio
+
+    public int currentRoom;
 
     protected void OnEnable() {
         horizontal = 0;
         rb.mass = mass;
         playerInput.enabled = true;
+        this.GetComponent<Collider>().enabled = false;
+        this.GetComponent<Collider>().enabled = true;
     }
 
     protected void OnDisable() {
@@ -54,11 +61,9 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
     private void Start()
     {
         currentHealth = maxHealth;
+        checkpoint = this.transform.position;
     }
 
-    protected void Update(){
-
-    }
 
     protected void FixedUpdate() {
         Move(); // Gestisce il movimento del personaggio
@@ -68,13 +73,6 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
             anim.SetBool("isJumping", isJumping); // Imposta l'animazione di salto a false se il personaggio è a terra
         }
     }
-    
-    public void GetDamage(float damage)
-    {
-        // da continuare se scende < 0 
-        currentHealth -= damage; 
-    }
-
         
     void OnMove(InputValue value){
         horizontal = value.Get<Vector2>().x; // Ottiene l'input orizzontale dal player
@@ -150,6 +148,17 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
         Quaternion.identity, whatIsJumpSurface).Length > 0 ? true : false;
     }
     
+    void DisableInput(){
+        if(playerInput.enabled) {
+            playerInput.enabled = false;
+        }
+    }
+
+    void RestoreInput(){
+        if(!playerInput.enabled) {
+            playerInput.enabled = true;
+        }
+    }
 
     protected void OnDrawGizmos() {
        Gizmos.DrawWireCube(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1 , 0.5f, transform.localScale.z- .4f));
@@ -179,6 +188,16 @@ public abstract class Controllable : MonoBehaviour, IDamageable, IPowerable
     }
 
     protected abstract void OnAction();
+
+    protected void Respawn(){
+        this.transform.position = checkpoint;
+    }
+
+    public void GetDamage(){
+        SwitchManager.instance.ResetToPlayer();
+        anim.SetTrigger("Death");
+        //Respawn();
+    }
 
     public void Power(){
         OnAction();

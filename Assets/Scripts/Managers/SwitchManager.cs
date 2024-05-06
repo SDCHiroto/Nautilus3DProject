@@ -40,9 +40,10 @@ public class SwitchManager : MonoBehaviour
         }
     }
 
-    void ResetToPlayer(){
+    public void ResetToPlayer(){
             controlled.GetComponent<Controllable>().enabled = false;
             controlled.GetComponent<Controllable>().SetisControllingAnimation(false);
+            controlled.layer = LayerMask.NameToLayer("Controllable");
             controlled = player.gameObject;
             player.SetisControllingAnimation(false);
             playerIsInControl = true;
@@ -58,13 +59,13 @@ public class SwitchManager : MonoBehaviour
         for(int i = 0; i < characters.Length; i++){
             Vector3 direction = characters[i].transform.position - player.transform.position;
             Physics.Raycast(player.transform.position, direction, out hit, 999);
-            if(hit.collider.gameObject == characters[i]){
+            if(hit.collider.gameObject == characters[i] && (player.currentRoom == characters[i].GetComponent<Controllable>().currentRoom)){
                 Debug.DrawLine(player.transform.position, hit.point, Color.white);
                 if(!visible.Contains(characters[i])) {
                     visible.Add(characters[i]);                    
                 }
             } else {
-                if(visible.Contains(characters[i])) {
+                if(visible.Contains(characters[i]) ) {
                     characters[i].GetComponent<Controllable>().RemoveOutline();
                     visible.Remove(characters[i]);
                 }
@@ -93,17 +94,27 @@ public class SwitchManager : MonoBehaviour
            
     }
 
+    public void DisableInputOfControlled(){
+        controlled.GetComponent<Controllable>().playerInput.enabled = false;
+    }
+
+    public void EnableInputOfControlled(){
+        controlled.GetComponent<Controllable>().playerInput.enabled = true;
+    }
+
     public void SwitchCharacter(){
         if(visible.Count > 0 && playerIsInControl){
             player.SetisControllingAnimation(true);
             player.enabled = false;
             controlled = nearestCharacter;
+            controlled.layer = LayerMask.NameToLayer("Controlled");
             controlled.GetComponent<Controllable>().SetisControllingAnimation(true);
             playerIsInControl = false;
         } else {
             player.SetisControllingAnimation(false);
             controlled.GetComponent<Controllable>().SetisControllingAnimation(false);
             controlled.GetComponent<Controllable>().enabled = false;
+            controlled.layer = LayerMask.NameToLayer("Controllable");
             controlled = player.gameObject;
             playerIsInControl = true;
         }

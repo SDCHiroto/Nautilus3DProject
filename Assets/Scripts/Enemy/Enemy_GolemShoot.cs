@@ -9,7 +9,7 @@ public enum State
 
 public class Enemy_GolemShoot : MonoBehaviour
 {
-    [SerializeField] Transform shootPoint, groundCheck;
+    [SerializeField] Transform shootPoint, groundCheck, obstacleCheck;
     [SerializeField] bool isSeeingPlayer;
     [SerializeField] LayerMask whatIsPlayer;
     [SerializeField] State state = State.Idle;
@@ -100,10 +100,10 @@ public class Enemy_GolemShoot : MonoBehaviour
     private void CheckForPlayer()
     {
         RaycastHit hit;
-        if (Physics.Raycast(shootPoint.position, transform.forward, out hit, range))
+        if (Physics.Raycast(obstacleCheck.position, transform.forward, out hit, range))
         {
             // Check if the hit object is the player
-            if (hit.collider.CompareTag("Player"))
+            if (hit.collider.CompareTag("Player") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Controlled"))
             {
                 ToAttack();
                 Debug.Log("Player found");
@@ -116,7 +116,7 @@ public class Enemy_GolemShoot : MonoBehaviour
     }
 
     protected void OnDrawGizmos() {
-       Gizmos.DrawRay(shootPoint.position, transform.forward);
+       Gizmos.DrawRay(obstacleCheck.position, transform.forward);
     }
 
     void ToPatrol()

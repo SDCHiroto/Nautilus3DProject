@@ -28,7 +28,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" || other.gameObject.layer == LayerMask.NameToLayer("Controlled"))
         {
-            //colpito giocatore o golem controllato
+            other.GetComponent<Controllable>().GetDamage();
         }
         
         Destroy(this.gameObject);

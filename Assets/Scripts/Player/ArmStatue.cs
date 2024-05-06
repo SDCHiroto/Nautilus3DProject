@@ -25,10 +25,6 @@ public class ArmStatue : Controllable
         EndControlling(); // Termina il controllo
     }
 
-    private void Start() {
-
-    }
-
     new void FixedUpdate() {
        base.FixedUpdate(); // Chiamata al metodo FixedUpdate della classe base (Controllable.cs)
        CheckForInteractions(); // Controlla se ci sono oggetti interattivi nel raggio

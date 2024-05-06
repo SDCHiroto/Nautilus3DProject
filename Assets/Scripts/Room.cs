@@ -1,42 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] GameObject vcam;
+    [SerializeField] private int id_room;
+    [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] Transform[] respawnPoint; 
+    
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Character"))
         {
-            vcam.SetActive(true);
+            GeneralManager.instance.DisableAllvCams();
+            cam.gameObject.SetActive(true);
+            other.gameObject.GetComponent<Controllable>().currentRoom = id_room;
         }
     }
 
-    // void FindNearestRespawnPoint()
-    // {
-    //     float minDist = 999f;
-    //     for(int i = 0; i < respawnPoint.Length; i++)
-    //     {
-    //         float dist = Vector3.Distance(respawnPoint[i].transform.position, transform.position);
-
-    //         if(dist < minDist)
-    //         {
-    //             minDist = dist;
-    //             SpawnManager.instance.SetCurrentSpawnPoint(respawnPoint[i].position);
-    //         }
-    //     }
-    // }
-
-
+    private void Update() {
+        cam.Follow = SwitchManager.instance.controlled.transform;
+    }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Character"))
         {
-            vcam.SetActive(false);
+            cam.gameObject.SetActive(false);
         }
     }
 }
