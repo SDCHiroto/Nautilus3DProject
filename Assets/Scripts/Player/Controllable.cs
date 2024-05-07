@@ -195,8 +195,17 @@ public abstract class Controllable : MonoBehaviour, IPowerable, IDamageable
 
     public void GetDamage(){
         SwitchManager.instance.ResetToPlayer();
+        SwitchManager.instance.DisableInputOfControlled();
         anim.SetTrigger("Death");
-        //Respawn();
+
+        GeneralManager.instance.ZoomCamera();
+
+        Invoke("ResetScene", .5f);
+    }
+
+    void ResetScene()
+    {
+
     }
 
     public void Power(){

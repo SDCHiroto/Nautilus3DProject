@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GeneralManager : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class GeneralManager : MonoBehaviour
         }
     }
 
+    public void ZoomCamera()
+    {
+        vCams[SwitchManager.instance.controlled.GetComponent<Controllable>().currentRoom].GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 5f;
+    }
+
 
     private void Update() {
         if(Input.GetKeyDown(KeyCode.P)){
@@ -45,13 +51,13 @@ public class GeneralManager : MonoBehaviour
     }
 
 
-    void Pause(){
+    public void Pause(){
         SwitchManager.instance.DisableInputOfControlled();
         Time.timeScale = 0;
         isPaused = true;
     }
 
-    void RemovePause(){
+    public void RemovePause(){
         SwitchManager.instance.EnableInputOfControlled();
         Time.timeScale = 1;     
         isPaused = false;
