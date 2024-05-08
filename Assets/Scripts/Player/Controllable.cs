@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class Controllable : MonoBehaviour, IPowerable, IDamageable
+public abstract class Controllable : MonoBehaviour, IPowerable
 {
     [Header("Movement")]
     [SerializeField] float walkSpeed = 10f; // Velocità di movimento del personaggio
@@ -193,19 +193,9 @@ public abstract class Controllable : MonoBehaviour, IPowerable, IDamageable
         this.transform.position = checkpoint;
     }
 
-    public void GetDamage(){
-        SwitchManager.instance.ResetToPlayer();
-        SwitchManager.instance.DisableInputOfControlled();
-        anim.SetTrigger("Death");
-
-        GeneralManager.instance.ZoomCamera();
-
-        Invoke("ResetScene", .5f);
-    }
-
-    void ResetScene()
+    void FadeInEffect()
     {
-
+        GeneralManager.instance.FadeInAnimation();
     }
 
     public void Power(){

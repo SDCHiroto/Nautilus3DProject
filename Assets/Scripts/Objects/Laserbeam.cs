@@ -31,7 +31,7 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
         // Se questo è un raggio laser iniziale, attivalo immediatamente
         if (isStartingLaserbeam)
         {
-            Power(); // Attiva il raggio laser
+            On(); // Attiva il raggio laser
         }
         else
         {
@@ -54,17 +54,21 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
 
     private void Update()
     {
-        if(isActive){
+        if(!GeneralManager.instance.isPaused){
+            if(isActive){
             centerParticle.SetActive(true);
             ShootLaser(); // Spara il raggio laser se è attivo
-        } else {
-            centerParticle.SetActive(false);
-            if(laserHitted != null && !laserHitted.isStartingLaserbeam){
+            }   
+            else {
                 centerParticle.SetActive(false);
-                laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
-                laserHitted = null;
+                if(laserHitted != null && !laserHitted.isStartingLaserbeam){
+                    centerParticle.SetActive(false);
+                    laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
+                    laserHitted = null;
+                }
             }
         }
+        
 
     }
 
@@ -74,7 +78,7 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
         RaycastHit hit;
 
         if(!isRotating) {
-            if (Physics.Raycast(transform.position, transform.forward, out hit, maxLength, whatIsGround))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, maxLength))
             {
                 lineRenderer.SetPosition(0, transform.position); // Imposta la posizione iniziale del raggio laser
                 lineRenderer.SetPosition(1, hit.point); // Imposta la posizione finale del raggio laser dove ha colpito
@@ -82,7 +86,8 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
                 if(hit.collider.GetComponent<Laserbeam>() != null)  {
                     laserHitted = hit.collider.GetComponent<Laserbeam>(); // Memorizza il raggio laser colpito
                     laserHitted?.On(); // Attiva il raggio laser colpito
-                } else {
+                } 
+                else {
                     if(laserHitted != null && !laserHitted.isStartingLaserbeam){
                         laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
                         laserHitted = null;
@@ -92,6 +97,10 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
                 if(hit.collider.GetComponent<Gate>() != null){
                     gateHitted = hit.collider.GetComponent<Gate>(); // Memorizza il cancello colpito
                     gateHitted?.Open(); // Usa il cancello colpito
+                }
+
+                if(hit.collider.GetComponent<Enemy_GolemShoot>() != null){
+                    hit.collider.GetComponent<Enemy_GolemShoot>().Die();
                 }
             }
             else
@@ -132,6 +141,13 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
         lineRenderer.enabled = true; // Abilita il LineRenderer
     }
 
+    public void OnWithBullet()
+    {
+        isActive = true; // Imposta il flag di attivazione del raggio laser su true
+        lineRenderer.enabled = true; // Abilita il LineRenderer
+        Invoke("Off", 2f);
+    }
+
     // Disattiva il raggio laser
     public void Off()
     {
@@ -146,6 +162,6 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
 
     public void Power()
     {
-        On();
+        OnWithBullet();
     }
 }

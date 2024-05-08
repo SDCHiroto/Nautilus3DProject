@@ -26,9 +26,8 @@ public class EnemyBullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.layer == LayerMask.NameToLayer("Controlled"))
-        {
-            other.GetComponent<Controllable>().GetDamage();
+        if (other.TryGetComponent(out IDamageable damageable)){
+            damageable.GetDamage();
         }
         
         Destroy(this.gameObject);

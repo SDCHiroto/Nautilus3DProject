@@ -3,12 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GeneralManager : MonoBehaviour
 {
     public static GeneralManager instance;
+
+    public Animator anim;
     
     public bool isPaused = false;
+    public float timeScale = 1;
+
 
     // Array di telecamere delle varie stanze. L'indice dell' array definisce la stanza di appartenenza di quella specifica telecamera. 
     //Es: vCams[2] contiene la telecamera della stanza 2.
@@ -20,6 +25,12 @@ public class GeneralManager : MonoBehaviour
             Destroy(this);
         else
             instance = this;
+
+        anim = GetComponent<Animator>();
+    }   
+
+    private void Update() {
+        Time.timeScale = timeScale;
     }
 
     private void Start() {
@@ -33,23 +44,38 @@ public class GeneralManager : MonoBehaviour
         }
     }
 
-    public void ZoomCamera()
+    public void ZoomCamera(float val)
     {
-        vCams[SwitchManager.instance.controlled.GetComponent<Controllable>().currentRoom].GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 5f;
+        vCams[SwitchManager.instance.controlled.GetComponent<Controllable>().currentRoom].GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = val;
+    }
+    
+    public void ResetZoomCamera()
+    {
+        vCams[SwitchManager.instance.controlled.GetComponent<Controllable>().currentRoom].GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 10;
     }
 
-
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.P)){
-            if(!isPaused){
-                Pause();
-            } else {
-                RemovePause();
-            }
-
-        }    
+    public void RespawnReset(){
+        ResetZoomCamera();
+        SwitchManager.instance.EnableInputOfControlled();
     }
 
+    public void ReloadScene(){
+        ResetZoomCamera();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void FadeInAnimation(){
+        ZoomCamera(5);
+        anim.SetTrigger("FadeIn");
+    }
+
+    void OnPause(){
+        if(!isPaused){
+            Pause();
+        } else {
+            RemovePause();
+        }
+    }
 
     public void Pause(){
         SwitchManager.instance.DisableInputOfControlled();

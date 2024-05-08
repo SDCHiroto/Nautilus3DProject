@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum State
 {
-    Idle, Patrol, Attack
+    Idle, Patrol, Charge, Attack
 };
 
 public class Enemy_GolemShoot : MonoBehaviour
@@ -26,43 +26,44 @@ public class Enemy_GolemShoot : MonoBehaviour
     public float range;
     public float degreesOfRotation;
     public LayerMask whatIsGround;
+    private bool isDead;
 
     private void Awake() {
         anim = this.GetComponent<Animator>();
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
-        
-    }
+        if(!GeneralManager.instance.isPaused && !isDead){
+            CheckForFloor();
+            CheckForPlayer();
+            Debug.Log(state);
+            switch (state)
+            {
+                case State.Idle:
+                    //Aspetta X secondi
+                    Invoke("ToPatrol", 1f);
+                    break;
 
-    private void Update()
-    {
-        CheckForFloor();
-        CheckForPlayer();
-        Debug.Log(state);
-        switch (state)
-        {
-            case State.Idle:
-                //Aspetta X secondi
-                Invoke("ToPatrol", 1f);
-                break;
+                case State.Patrol:
+                    //Muoviti 
+                    Move();
+                    break;
 
-            case State.Patrol:
-                //Muoviti 
-                Move();
-                break;
+                case State.Charge:
+                    //Spara un proiettile nella direzione dove sta guardando (e quindi dove ha visto il player)
+                    Invoke("ToAttack",1f);
+                    break;
 
-            case State.Attack:
-                //Spara un proiettile nella direzione dove sta guardando (e quindi dove ha visto il player)
-                Debug.Log("SPAARAAA");
-                if(canShoot){
-                    ShootBullet();
-                }
+                case State.Attack:  
+                    if(canShoot){
+                        ShootBullet();
+                    }
+                    break;
 
-                break;
-
+            }
         }
+
     }
 
     void ShootBullet(){
@@ -81,14 +82,7 @@ public class Enemy_GolemShoot : MonoBehaviour
             Debug.Log("Non c'è il pavimentoolo");
             Flip();
 
-        } else
-        {
-            if(state == State.Attack && !isSeeingPlayer){
-                ToIdle();
-                Debug.Log("CAMMINA");
-            }
-            
-        }
+        } 
     }
 
     void Move()
@@ -105,12 +99,14 @@ public class Enemy_GolemShoot : MonoBehaviour
             // Check if the hit object is the player
             if (hit.collider.CompareTag("Player") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Controlled"))
             {
-                ToAttack();
+                if(state != State.Charge && state != State.Attack)
+                    ToCharge();                    
                 Debug.Log("Player found");
-            }
+            } else ToPatrol();
         }
         else
         {
+    
             Debug.Log("Player not detected");
         }
     }
@@ -136,6 +132,11 @@ public class Enemy_GolemShoot : MonoBehaviour
         state = State.Attack;
     }
 
+    void ToCharge(){
+        anim.SetBool("isWalking", false);
+        state = State.Charge;
+    }
+
     protected void Flip()
     {
         isFacingRight = !isFacingRight; // Inverte la direzione in cui il personaggio sta guardando
@@ -147,6 +148,16 @@ public class Enemy_GolemShoot : MonoBehaviour
         {
             transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, degreesOfRotation, transform.localRotation.z));
         }
+    }
 
+    public void Die(){
+        if(!isDead){
+            isDead = true;
+            anim.SetTrigger("Death");
+        }
+    }
+
+    public void DestroyEnemy(){
+        Destroy(this.gameObject);
     }
 }

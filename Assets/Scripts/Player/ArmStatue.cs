@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmStatue : Controllable
+public class ArmStatue : Controllable, IDamageable
 {
     [Header("Interaction Info")]
     [SerializeField] float radiusOfInteraction; // Raggio per la ricerca di oggetti interattivi
@@ -12,6 +12,8 @@ public class ArmStatue : Controllable
     [Header("Materials")]
     [SerializeField] Material off; // Materiale quando il controllo è disabilitato
     [SerializeField] Material on; // Materiale quando il controllo è abilitato
+
+    private bool canAction = true;
 
     private bool canInteract = false; // Flag che indica se è possibile interagire con un oggetto
 
@@ -51,12 +53,24 @@ public class ArmStatue : Controllable
     }
 
     protected override void OnAction(){
-        if(canInteract){ // Se è possibile interagire con un oggetto...
+        if(canInteract && canAction){ // Se è possibile interagire con un oggetto...    
+            canAction = false;
             interactableObj.Interact(); // ...utilizza l'oggetto interattivo
+            anim.SetTrigger("Interact");
+            Invoke("ResetActionCD", 1.1f);
         }
+    }
+
+    void ResetActionCD(){
+        canAction = true;
     }
 
     new void OnDrawGizmos(){
         Gizmos.DrawWireSphere(this.transform.position, radiusOfInteraction); // Disegna una sfera di gizmo per rappresentare il raggio di interazione
+    }
+
+    public void GetDamage()
+    {
+        SwitchManager.instance.ResetToPlayer();
     }
 }
