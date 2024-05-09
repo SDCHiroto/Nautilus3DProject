@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class MainCharacter : Controllable, IDamageable
 {
+    public bool canHide = false;
+    public bool isHidden = false;
 
     protected override void OnAction(){
+        if(canHide && !!isHidden){
+            isHidden = true;
+            
+        } else if (canHide && isHidden){
+            isHidden = false;
+
+        }
     }
 
     public void SetCheckpoint(Vector3 position){

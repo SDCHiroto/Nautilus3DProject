@@ -5,15 +5,20 @@ using UnityEngine;
 public class Gate : MonoBehaviour, IActivable
 {   
     [SerializeField] bool isOpen = false;
+    [SerializeField] Animator anim;
+
+    private void Awake() {
+        anim = GetComponent<Animator>();
+    }
 
     public void Open(){
         isOpen = true;
-        this.gameObject.SetActive(false);
+        anim.SetTrigger("Open");
     }
 
     public void Close(){
         isOpen = false;
-        this.gameObject.SetActive(false);
+        anim.SetTrigger("Close");
     }
 
     public void Activate(){

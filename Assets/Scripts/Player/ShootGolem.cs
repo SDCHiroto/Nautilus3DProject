@@ -46,5 +46,6 @@ public class ShootGolem : Controllable, IDamageable
     {
         SwitchManager.instance.ResetToPlayer();
     }
+    
 
 }

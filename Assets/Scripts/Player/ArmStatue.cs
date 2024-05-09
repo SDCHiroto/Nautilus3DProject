@@ -56,7 +56,7 @@ public class ArmStatue : Controllable, IDamageable
         if(canInteract && canAction){ // Se è possibile interagire con un oggetto...    
             canAction = false;
             interactableObj.Interact(); // ...utilizza l'oggetto interattivo
-            anim.SetTrigger("Interact");
+            anim.SetBool("Interact", true);
             Invoke("ResetActionCD", 1.1f);
         }
     }
@@ -64,6 +64,7 @@ public class ArmStatue : Controllable, IDamageable
     void ResetActionCD(){
         canAction = true;
     }
+
 
     new void OnDrawGizmos(){
         Gizmos.DrawWireSphere(this.transform.position, radiusOfInteraction); // Disegna una sfera di gizmo per rappresentare il raggio di interazione
@@ -73,4 +74,5 @@ public class ArmStatue : Controllable, IDamageable
     {
         SwitchManager.instance.ResetToPlayer();
     }
+
 }

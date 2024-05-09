@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -148,6 +149,7 @@ public abstract class Controllable : MonoBehaviour, IPowerable
         Quaternion.identity, whatIsJumpSurface).Length > 0 ? true : false;
     }
     
+    
     void DisableInput(){
         if(playerInput.enabled) {
             playerInput.enabled = false;
@@ -199,6 +201,15 @@ public abstract class Controllable : MonoBehaviour, IPowerable
     }
 
     public void Power(){
+        ActivatedByBullet();
+    }
+
+    private void ActivatedByBullet()
+    {
         OnAction();
+    }
+
+    public void StopInteractAnimation(){
+        anim.SetBool("Interact", false);
     }
 }
