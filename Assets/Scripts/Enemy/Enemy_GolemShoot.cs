@@ -99,15 +99,16 @@ public class Enemy_GolemShoot : MonoBehaviour
             // Check if the hit object is the player
             if (hit.collider.CompareTag("Player") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Controlled"))
             {
-                if(state != State.Charge && state != State.Attack)
-                    ToCharge();                    
-                Debug.Log("Player found");
-            } else ToPatrol();
-        }
-        else
-        {
-    
-            Debug.Log("Player not detected");
+                if (state != State.Charge && state != State.Attack)
+                {
+                    ToCharge();
+                }
+
+            }
+            else
+            {
+                ToPatrol();
+            }
         }
     }
 

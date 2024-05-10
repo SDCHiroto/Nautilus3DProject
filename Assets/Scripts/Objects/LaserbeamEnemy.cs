@@ -12,10 +12,6 @@ public class LaserbeamEnemy : MonoBehaviour
 
     private LineRenderer lineRenderer; // Riferimento al componente LineRenderer
     private bool isActive = false; // Flag che indica se il raggio laser è attivo
-    private bool isRotating = false; // Flag che indica se il raggio laser è in rotazione
-
-    Laserbeam laserHitted; // Raggio laser colpito
-    Gate gateHitted; // Cancello colpito
 
     Animator anim; // Riferimento all'Animator
 
@@ -56,16 +52,8 @@ public class LaserbeamEnemy : MonoBehaviour
     {
         if(!GeneralManager.instance.isPaused){
             if(isActive){
-            centerParticle.SetActive(true);
-            ShootLaser(); // Spara il raggio laser se è attivo
-            }   
-            else {
-                centerParticle.SetActive(false);
-                if(laserHitted != null){
-                    centerParticle.SetActive(false);
-                    laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
-                    laserHitted = null;
-                }
+                centerParticle.SetActive(true);
+                ShootLaser(); // Spara il raggio laser se è attivo
             }
         }
         
@@ -82,25 +70,15 @@ public class LaserbeamEnemy : MonoBehaviour
             lineRenderer.SetPosition(0, transform.position); // Imposta la posizione iniziale del raggio laser
             lineRenderer.SetPosition(1, hit.point); // Imposta la posizione finale del raggio laser dove ha colpito
 
-            if(hit.collider.GetComponent<Laserbeam>() != null)  {
-                laserHitted = hit.collider.GetComponent<Laserbeam>(); // Memorizza il raggio laser colpito
-                laserHitted?.On(); // Attiva il raggio laser colpito
-            } 
-            else {
-                if(laserHitted != null){
-                    laserHitted.Off(); // Disattiva il raggio laser colpito se non è un raggio laser iniziale
-                    laserHitted = null;
+            if (hit.collider.gameObject.TryGetComponent(out IDamageable damageable))
+            {
+                if(hit.collider.gameObject.TryGetComponent(out Controllable chara)){
+                    if(!chara.isDead)
+                        damageable.GetDamage();
                 }
+
             }
 
-            if(hit.collider.GetComponent<Gate>() != null){
-                gateHitted = hit.collider.GetComponent<Gate>(); // Memorizza il cancello colpito
-                gateHitted?.Open(); // Usa il cancello colpito
-            }
-
-            if(hit.collider.GetComponent<Enemy_GolemShoot>() != null){
-                hit.collider.GetComponent<Enemy_GolemShoot>().Die();
-            }
         }
         else
         {

@@ -27,6 +27,8 @@ public class GeneralManager : MonoBehaviour
             instance = this;
 
         anim = GetComponent<Animator>();
+
+        DontDestroyOnLoad(this.gameObject);
     }   
 
     private void Update() {

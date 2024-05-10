@@ -37,6 +37,7 @@ public abstract class Controllable : MonoBehaviour, IPowerable
     [SerializeField] float HorizontalVelocity; // Velocità orizzontale del personaggio
 
     public int currentRoom;
+    public bool isDead = false;
 
     protected void OnEnable() {
         horizontal = 0;
@@ -61,6 +62,7 @@ public abstract class Controllable : MonoBehaviour, IPowerable
 
     private void Start()
     {
+        isDead = false;
         currentHealth = maxHealth;
         checkpoint = this.transform.position;
     }

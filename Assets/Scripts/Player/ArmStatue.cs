@@ -72,6 +72,7 @@ public class ArmStatue : Controllable, IDamageable
 
     public void GetDamage()
     {
+        isDead = true;
         SwitchManager.instance.ResetToPlayer();
     }
 

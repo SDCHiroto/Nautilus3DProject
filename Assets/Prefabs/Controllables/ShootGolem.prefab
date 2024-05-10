@@ -154,6 +154,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   HorizontalVelocity: 0
   currentRoom: 0
+  isDead: 0
   degreesOfRotation: 270
   canShoot: 1
   isShootingHorizontally: 0
