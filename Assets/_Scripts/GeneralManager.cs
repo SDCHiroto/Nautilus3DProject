@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GeneralManager : MonoBehaviour
 {
     public static GeneralManager instance;
 
     public Animator anim;
+    public PlayerInput pI;
     
     public bool isPaused = false;
     public float timeScale = 1;
@@ -19,6 +21,7 @@ public class GeneralManager : MonoBehaviour
     //Es: vCams[2] contiene la telecamera della stanza 2.
     public GameObject[] vCams;
 
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -27,11 +30,14 @@ public class GeneralManager : MonoBehaviour
             instance = this;
 
         anim = GetComponent<Animator>();
+        pI = GetComponent<PlayerInput>();
 
     }   
 
     private void Update() {
         Time.timeScale = timeScale;
+
+        Debug.Log(this.GetComponent<PlayerInput>().currentControlScheme);
     }
 
     private void Start() {
@@ -65,32 +71,38 @@ public class GeneralManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
-    public void OnRespawn(){
-        ReloadScene();
-    }
+
 
     public void FadeInAnimation(){
         ZoomCamera(5);
         anim.SetTrigger("FadeIn");
     }
 
-    void OnPause(){
+    public void PausePressed(){
         if(!isPaused){
             Pause();
         } else {
             RemovePause();
         }
+        
+    }
+
+    void OnPause(){
+        PausePressed(); 
     }
 
     public void Pause(){
         SwitchManager.instance.DisableInputOfControlled();
         Time.timeScale = 0;
         isPaused = true;
+        pI.enabled = true;
     }
 
     public void RemovePause(){
+        pI.enabled = false;
         SwitchManager.instance.EnableInputOfControlled();
         Time.timeScale = 1;     
         isPaused = false;
+
     }
 }

@@ -221,6 +221,13 @@ public abstract class Controllable : MonoBehaviour, IPowerable
         if(CanJump()){
             audioSource.Play();            
         }
+    }
 
+    void OnPause(){
+        GeneralManager.instance.PausePressed();    
+    }
+
+    void OnRespawn(){
+        GeneralManager.instance.ReloadScene();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,9 +13,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] TMP_Dropdown resDropdown;
     [SerializeField] Resolution[] resolutions;
 
+    [SerializeField] GameObject menuFirstButton, settingsFirstButton;
+
     private void Start()
     {
         DefineResolutions();
+        EventSystem.current.SetSelectedGameObject(menuFirstButton);
     }
 
     private void DefineResolutions()
@@ -51,6 +55,8 @@ public class UIManager : MonoBehaviour
 
     public void OpenSettings(){
         Debug.Log("open settings");
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingsFirstButton);
         MenuCanvas.SetActive(false);
         SettingsCanvas.SetActive(true);
     }
