@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using Unity.VisualScripting; // Assumo che questo namespace sia utilizzato per Unity Visual Scripting, puoi rimuoverlo se non è necessario
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -144,8 +143,8 @@ public abstract class Controllable : MonoBehaviour, IPowerable
                 return true;
             }
         }
-        return false;
-    }
+        return false;
+    }
 
     bool CanJump(){
         // Controlla se il personaggio è a terra usando una sfera di collisione
@@ -170,7 +169,7 @@ public abstract class Controllable : MonoBehaviour, IPowerable
        Gizmos.DrawWireCube(new Vector3(groundCheck.position.x, groundCheck.position.y - offset, groundCheck.position.z), new Vector3(transform.localScale.x - 1 , 0.5f, transform.localScale.z- .4f));
     }
 
-    [SerializeField] protected float degreesOfRotation; // Gradi di rotazione per il flip
+    [SerializeField] protected float degreesOfRotation; // Gradi di rotazione per il flip, serve perché alcune mesh devono ruotare ma senza far ruoratare il gameobject in se, e viceversa
     protected void Flip(){
         isFacingRight = !isFacingRight; // Inverte la direzione in cui il personaggio sta guardando
         if (isFacingRight)

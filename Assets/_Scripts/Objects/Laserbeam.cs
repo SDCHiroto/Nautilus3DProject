@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Laserbeam : MonoBehaviour, IPowerable, IActivable
@@ -8,24 +7,22 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
     [SerializeField] bool isStartingLaserbeam = false; // Flag che indica se questo è un raggio laser iniziale
 
     [Header("References")]
-    [SerializeField] GameObject centerParticle;
+    [SerializeField] GameObject centerParticle; // Il prefab dei particle presenti al centro del laser
 
     private LineRenderer lineRenderer; // Riferimento al componente LineRenderer
     private bool isActive = false; // Flag che indica se il raggio laser è attivo
     private bool isRotating = false; // Flag che indica se il raggio laser è in rotazione
 
     Laserbeam laserHitted; // Raggio laser colpito
-    Gate gateHitted; // Cancello colpito
-
+    Button buttonHitted = null; // Pulsante colpito
     Animator anim; // Riferimento all'Animator
     AudioSource audioSource;
 
     private void Awake() {
         anim = GetComponent<Animator>(); // Ottiene il riferimento all'Animator del GameObject
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>(); // Ottiene il riferimento all'AudioSource del GameObject
     }
 
-    // Funzione chiamata all'avvio dello script
     private void Start()
     {
         CreateLineRenderer(); // Crea il LineRenderer
@@ -48,7 +45,7 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
         lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Imposta il materiale del LineRenderer
 
         Color color = new Color(0, 1, 1, 1);
-        lineRenderer.startColor = color; lineRenderer.endColor = color;
+        lineRenderer.startColor = color; lineRenderer.endColor = color; // Imposta il colore del raggio laser
         lineRenderer.startWidth = 0.1f; // Imposta la larghezza iniziale del raggio
         lineRenderer.endWidth = 0.1f; // Imposta la larghezza finale del raggio
         lineRenderer.positionCount = 2; // Imposta il numero di punti del raggio (inizio e fine)
@@ -58,8 +55,8 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
     {
         if(!GeneralManager.instance.isPaused){
             if(isActive){
-            centerParticle.SetActive(true);
-            ShootLaser(); // Spara il raggio laser se è attivo
+                centerParticle.SetActive(true);
+                ShootLaser(); // Spara il raggio laser se è attivo
             }   
             else {
                 centerParticle.SetActive(false);
@@ -70,12 +67,9 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
                 }
             }
         }
-        
-
     }
 
     // Spara il raggio laser
-    Button buttonHitted = null;
     private void ShootLaser()
     {
         RaycastHit hit;
@@ -97,16 +91,16 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
                     }
                 }
 
-                // se il laser colpisce un pulsante, lo attiva
+                // Se il laser colpisce un pulsante, lo attiva
                 if (hit.collider.gameObject.TryGetComponent(out Button objHitted)){
                     objHitted.Activate();
                     buttonHitted = objHitted;
                 } else if(buttonHitted != null) {
                     buttonHitted.Deactivate();
                     buttonHitted = null;
-                 }
+                }
 
-                // se il laser colpisce un nemico
+                // Se il laser colpisce un nemico, lo elimina
                 if(hit.collider.GetComponent<Enemy_GolemShoot>() != null){
                     hit.collider.GetComponent<Enemy_GolemShoot>().Die();
                 }
@@ -132,7 +126,6 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
             lineRenderer.SetPosition(0, transform.position); // Imposta la posizione iniziale del raggio laser
             lineRenderer.SetPosition(1, transform.position); // Imposta la posizione finale del raggio laser dove ha colpito
         }
-       
     }
 
     // Ruota il raggio laser
@@ -140,7 +133,7 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
         anim.SetTrigger("Rotate"); // Imposta il trigger dell'animazione per la rotazione del raggio laser
     }
 
-    // Animation Event
+    // Evento dell'animazione
     void _DisableWhenRotating(){
         isRotating = !isRotating; // Inverte lo stato della rotazione del raggio laser
         if(laserHitted != null  && !laserHitted.isStartingLaserbeam) {
@@ -149,7 +142,7 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
         }
     }
 
-        // Attiva il raggio laser
+    // Attiva il raggio laser
     public void On()
     {
         isActive = true; // Imposta il flag di attivazione del raggio laser su true
@@ -160,35 +153,36 @@ public class Laserbeam : MonoBehaviour, IPowerable, IActivable
     {
         isActive = true; // Imposta il flag di attivazione del raggio laser su true
         lineRenderer.enabled = true; // Abilita il LineRenderer
-        Invoke("Off", 2f);
+        Invoke("Off", 2f); // Chiama la funzione Off dopo 2 secondi
     }
 
     // Disattiva il raggio laser
     public void Off()
     {
         isActive = false; // Imposta il flag di attivazione del raggio laser su false
-        _StopPlayerClip();
+        _StopPlayerClip(); // Interrompe la riproduzione del suono del raggio laser
         lineRenderer.enabled = false; // Disabilita il LineRenderer
     }
 
     public void Activate()
     {
-        RotateLaserbeam();
+        RotateLaserbeam(); // Attiva la rotazione del raggio laser
     }
 
     public void Power()
     {
-        OnWithBullet();
+        OnWithBullet(); // Attiva il raggio laser con proiettile
     }
 
+    // Riproduce il suono del raggio laser
     public void _PlayLaserClip(){
         audioSource.Play();
     }
 
+    // Interrompe la riproduzione del suono del raggio laser
     public void _StopPlayerClip(){
         if(audioSource.isPlaying){
             audioSource.Stop();
         }
-
     }
 }

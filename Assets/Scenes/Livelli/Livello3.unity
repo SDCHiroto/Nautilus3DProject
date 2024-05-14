@@ -4334,6 +4334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  pI: {fileID: 0}
+  pauseCanvas: {fileID: 0}
   isPaused: 0
   timeScale: 1
   vCams:
@@ -4872,6 +4874,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Laserbeam
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626348803296363265, guid: 118d18992af13864dab763f15a063a13,
+        type: 3}
+      propertyPath: isStartingLaserbeam
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7965345248859016611, guid: 118d18992af13864dab763f15a063a13,
         type: 3}

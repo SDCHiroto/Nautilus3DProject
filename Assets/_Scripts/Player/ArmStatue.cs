@@ -10,8 +10,8 @@ public class ArmStatue : Controllable, IDamageable
     [SerializeField] IInteractable interactableObj; // Oggetto interattivo rilevato
 
     [Header("Materials")]
-    [SerializeField] Material off; // Materiale quando il controllo è disabilitato
-    [SerializeField] Material on; // Materiale quando il controllo è abilitato
+    [SerializeField] Material off; // Materiale quando è disabilitato
+    [SerializeField] Material on; // Materiale quando è abilitato
 
     private bool canAction = true;
 

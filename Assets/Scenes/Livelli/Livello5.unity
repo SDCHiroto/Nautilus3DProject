@@ -1351,6 +1351,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Laserbeam (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7626348803296363265, guid: 118d18992af13864dab763f15a063a13,
+        type: 3}
+      propertyPath: isStartingLaserbeam
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7965345248859016611, guid: 118d18992af13864dab763f15a063a13,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2671,6 +2676,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Laserbeam (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626348803296363265, guid: 118d18992af13864dab763f15a063a13,
+        type: 3}
+      propertyPath: isStartingLaserbeam
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7965345248859016611, guid: 118d18992af13864dab763f15a063a13,
         type: 3}

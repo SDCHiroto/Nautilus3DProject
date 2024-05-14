@@ -22,11 +22,11 @@ public class Gate : MonoBehaviour, IActivable
     }
 
     public void Activate(){
-            if(isOpen) {
-                Close();
-            } else {
-                Open();
-            }
+        if(isOpen) {
+            Close();
+        } else {
+            Open();
+        }
     }
 
 }

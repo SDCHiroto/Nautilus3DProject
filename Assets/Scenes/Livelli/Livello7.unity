@@ -3772,6 +3772,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  pI: {fileID: 0}
+  pauseCanvas: {fileID: 0}
   isPaused: 0
   timeScale: 1
   vCams:
@@ -4634,11 +4636,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083517045828498383, guid: 3969d4074098fbf48b2396fd2d8f0c35,
-        type: 3}
-      propertyPath: whatIsHittable.m_Bits
-      value: 7935
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

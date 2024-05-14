@@ -4017,6 +4017,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  pI: {fileID: 0}
+  pauseCanvas: {fileID: 0}
   isPaused: 0
   timeScale: 1
   vCams:

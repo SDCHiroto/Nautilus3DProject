@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class LaserbeamEnemy : MonoBehaviour
@@ -8,19 +7,18 @@ public class LaserbeamEnemy : MonoBehaviour
     [SerializeField] bool isStartingLaserbeam = false; // Flag che indica se questo è un raggio laser iniziale
 
     [Header("References")]
-    [SerializeField] GameObject centerParticle;
+    [SerializeField] GameObject centerParticle;// Il prefab dei particle presenti al centro del laser
 
     private LineRenderer lineRenderer; // Riferimento al componente LineRenderer
     private bool isActive = false; // Flag che indica se il raggio laser è attivo
 
-    Animator anim; // Riferimento all'Animator
+    Animator anim; 
     [SerializeField] LayerMask whatIsHittable;
 
     private void Awake() {
         anim = GetComponent<Animator>(); // Ottiene il riferimento all'Animator del GameObject
     }
 
-    // Funzione chiamata all'avvio dello script
     private void Start()
     {
         CreateLineRenderer(); // Crea il LineRenderer
@@ -43,7 +41,7 @@ public class LaserbeamEnemy : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Imposta il materiale del LineRenderer
 
         Color color = new Color(1, 0, 0, 1);
-        lineRenderer.startColor = color; lineRenderer.endColor = color;
+        lineRenderer.startColor = color; lineRenderer.endColor = color; // Imposta il colore del raggio laser
         lineRenderer.startWidth = 0.1f; // Imposta la larghezza iniziale del raggio
         lineRenderer.endWidth = 0.1f; // Imposta la larghezza finale del raggio
         lineRenderer.positionCount = 2; // Imposta il numero di punti del raggio (inizio e fine)
@@ -57,8 +55,6 @@ public class LaserbeamEnemy : MonoBehaviour
                 ShootLaser(); // Spara il raggio laser se è attivo
             }
         }
-        
-
     }
 
     // Spara il raggio laser
@@ -71,33 +67,24 @@ public class LaserbeamEnemy : MonoBehaviour
             lineRenderer.SetPosition(0, transform.position); // Imposta la posizione iniziale del raggio laser
             lineRenderer.SetPosition(1, hit.point); // Imposta la posizione finale del raggio laser dove ha colpito
 
+            // Se il raggio laser colpisce il personaggio principale, gli infligge danni
             if (hit.collider.gameObject.TryGetComponent(out MainCharacter damageable))
             {
                 if(!damageable.isDead) {damageable.GetDamage();}
             }
-
         }
         else
         {
             lineRenderer.SetPosition(0, transform.position); // Imposta la posizione iniziale del raggio laser
             lineRenderer.SetPosition(1, transform.position + transform.forward * maxLength); // Imposta la posizione finale del raggio laser (massima lunghezza)
         }
-       
     }
 
-
-        // Attiva il raggio laser
+    // Attiva il raggio laser
     public void On()
     {
         isActive = true; // Imposta il flag di attivazione del raggio laser su true
         lineRenderer.enabled = true; // Abilita il LineRenderer
-    }
-
-    public void OnWithBullet()
-    {
-        isActive = true; // Imposta il flag di attivazione del raggio laser su true
-        lineRenderer.enabled = true; // Abilita il LineRenderer
-        Invoke("Off", 2f);
     }
 
     // Disattiva il raggio laser
@@ -106,6 +93,4 @@ public class LaserbeamEnemy : MonoBehaviour
         isActive = false; // Imposta il flag di attivazione del raggio laser su false
         lineRenderer.enabled = false; // Disabilita il LineRenderer
     }
-
-
 }

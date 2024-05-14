@@ -157,7 +157,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 3776
-  isStartingLaserbeam: 0
+  isStartingLaserbeam: 1
   centerParticle: {fileID: 8798160415457189005}
 --- !u!95 &4046354441691993275
 Animator:
@@ -192,7 +192,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4091326daac13a647a7eaff7267fc0b3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.338
+  m_Volume: 0.154
   m_Pitch: 1
   Loop: 1
   Mute: 0
